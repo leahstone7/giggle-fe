@@ -32,10 +32,11 @@ export default Header
 const styles=StyleSheet.create({
   headerContainer: {
     backgroundColor: '#bdfcc9',
-    width: '100%',
+    width: '90%',
     alignItems: 'center',
-    paddingHorizontal: 30,
-    paddingVertical: 35,
+    borderRadius: 20,
+    margin: 15,
+    padding: 30,
 
   },
   headerTitle: {

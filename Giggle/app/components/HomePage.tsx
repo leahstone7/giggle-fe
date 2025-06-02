@@ -4,7 +4,7 @@ import {View, Text} from "react-native"
 function HomePage() {
 return (
     <View>
-    <Text> events go here
+    <Text> 
     </Text>
     </View>
 )

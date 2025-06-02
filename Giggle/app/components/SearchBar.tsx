@@ -1,11 +1,11 @@
 import React from "react"
-import {View, TextInput} from "react-native"
+import {View} from "react-native"
+import { Searchbar } from "react-native-paper"
 
-function SearchBar() {
+function SearchEvents() {
+const [searchQuery, setSearchQuery] = React.useState('')
 return (
-<View>
- <TextInput />
-</View>
+<Searchbar placeholder="Search for an event..." onChangeText={setSearchQuery} value={searchQuery}/>
 )
 }
-export default SearchBar
+export default SearchEvents
