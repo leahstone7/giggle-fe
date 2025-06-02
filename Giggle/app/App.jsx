@@ -5,13 +5,19 @@ import Footer from "./components/Footer";
 
 export default function App() {
   return (
-    <View>
- <HomePage />
+  <View style={styles.container}>
  <Header />
- <Footer />
+ <View style={styles.container}> 
+ <HomePage/>
+</View>
+ <Footer/>
  </View>
   );
 }
 const styles=StyleSheet.create({
-
+container: {
+  justifyContent: 'flex-end',
+  alignItems: 'center',
+  flex: 1
+}
 })
