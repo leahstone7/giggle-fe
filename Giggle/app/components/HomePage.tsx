@@ -5,6 +5,7 @@ function HomePage() {
 return (
     <View>
     <Text> 
+        he
     </Text>
     </View>
 )
