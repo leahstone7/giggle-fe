@@ -1,12 +1,13 @@
-import React from "react"
-import {View, Text} from "react-native"
+import React from "react";
+import { Text, View } from "react-native";
 
 function HomePage() {
-return (
+  return (
     <View>
+      <Text>A</Text>
     <Text>         
     </Text>
     </View>
-)
+  );
 }
-export default HomePage
+export default HomePage;
