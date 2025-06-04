@@ -1,16 +1,11 @@
-import React from "react"
-import {View, Text} from "react-native"
+import React from "react";
+import { Text, View } from "react-native";
 
 function HomePage() {
-return (
+  return (
     <View>
-<<<<<<< HEAD:Giggle/app/components/HomePage.tsx
-    <Text>         
-=======
-    <Text> 
->>>>>>> main:app/components/HomePage.tsx
-    </Text>
+      <Text>A</Text>
     </View>
-)
+  );
 }
-export default HomePage
+export default HomePage;
