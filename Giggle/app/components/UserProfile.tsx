@@ -9,7 +9,7 @@ const [user, setUser] = useState({
     profilePicture: "examplelink",
     concertInterests: "dancing, close to front, get there early"
 })
-const []
+// const []
 
 return (
 <View>
