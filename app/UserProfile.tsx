@@ -7,10 +7,10 @@ function UserProfile() {
     profilePicture: "https://robohash.org/mail@ashallendesign.co.uk",
     concertInterests: "dancing, close to front, get there early",
   });
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   return (
-    <View style={styles.container}>
+    <View>
       <Image
         style={styles.avatar}
         resizeMode="contain"
@@ -20,41 +20,31 @@ function UserProfile() {
       />
       <Text style={styles.username}>{user.username}</Text>
       <Text style={styles.email}>{user.emailAddress}</Text>
-      <Text style={styles.email}>Concert Preferences:</Text>
-      <Text style={styles.interests}>{user.concertInterests}</Text>
     </View>
   );
 }
-
 const styles = StyleSheet.create({
-  container: {
+ container: {
+    flex: 1,
     alignItems: "center",
-    padding: 10,
-    backgroundColor: "#f9f9f9",
+    padding: 20,
+    backgroundColor: "#ffffff",
   },
   avatar: {
-    width: 75,
-    height: 75,
+    width: 150,
+    height: 150,
     borderColor: "#252F40",
-    borderWidth: 2,
-    marginBottom: 10,
+    borderWidth: 3,
+    borderRadius: 75,
+    marginBottom: 16,
   },
   username: {
-    fontSize: 10,
+    fontSize: 20,
     fontWeight: "bold",
   },
   email: {
-    fontSize: 10,
-    color: "#555",
-  },
-
-  interests: {
-    fontStyle: "italic",
-    textAlign: "center",
-    fontSize: 10,
-    marginTop: 4,
-    paddingHorizontal: 20,
-  },
+    fontSize: 16,
+    color: "#666",
+  }
 });
-
 export default UserProfile;
