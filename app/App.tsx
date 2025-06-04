@@ -5,6 +5,7 @@ import HomePage from "./components/HomePage";
 import NavBar from "./components/NavBar";
 import SearchEvents from "./components/SearchBar";
 
+
 export default function App() {
   return (
     <View style={styles.container}>
