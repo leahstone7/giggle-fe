@@ -1,17 +1,21 @@
 import React from "react";
 import { Button, Text, View } from "react-native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { ChatProps } from "../../types"
 
-function Chat() {
-  return (
+type Props = NativeStackScreenProps<RootStackParamList, "Chat">;
+
+function Chat({ navigation }: Props) {
+return (
     <View>
-      <Text>
+
         <Button
           title="Chat"
           accessibilityLabel="go to chat"
-          onPress={() => console.log("button pressed")}
-          color="blue"
-        ></Button>
-      </Text>
+          onPress={() => navigation.navigate("ChatPage")}
+          color="red"
+          />
+ 
     </View>
   );
 }
