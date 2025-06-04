@@ -2,8 +2,8 @@ import { StyleSheet, View } from "react-native";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import HomePage from "./components/HomePage";
+import NavBar from "./components/NavBar";
 import SearchEvents from "./components/SearchBar";
-import NavBar from './components/NavBar'
 
 export default function App() {
   return (
@@ -12,7 +12,7 @@ export default function App() {
       <SearchEvents />
       <View style={styles.container}>
         <HomePage />
-        <NavBar/>
+        <NavBar />
       </View>
       <Footer />
     </View>
