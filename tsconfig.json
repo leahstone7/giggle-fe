@@ -1,5 +1,5 @@
 {
-<<<<<<< HEAD
+
   "files": [],
   "references": [
     {
@@ -10,8 +10,8 @@
     }
   ],
   "compilerOptions": {},
-  "extends": "expo/tsconfig.base"
-=======
+  "extends": "expo/tsconfig.base",
+
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "strict": true,
@@ -27,5 +27,5 @@
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
   ]
->>>>>>> main
+
 }
