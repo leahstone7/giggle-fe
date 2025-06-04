@@ -4,7 +4,7 @@ import Chat from "./Chat";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-
+import UserProfile from "./UserProfile";
 
 
 const Stack = createNativeStackNavigator()
@@ -13,16 +13,14 @@ const Tab = createBottomTabNavigator()
 
 export default function NavBar() {
     return (<NavigationIndependentTree>
-<NavigationContainer>
-
-    
-    
-        <Tab.Navigator initialRouteName={HomePage} />
+    <NavigationContainer>
+     <Tab.Navigator initialRouteName="HomePage">
         <Tab.Screen name="HomePage" component={HomePage} />
         <Tab.Screen name="Chat" component={Chat} />
-
-
-</NavigationContainer></NavigationIndependentTree>
+        <Tab.Screen name="User Profile" component={UserProfile} />
+        </ Tab.Navigator>
+    </NavigationContainer>
+    </NavigationIndependentTree>
     )
 }
 
