@@ -1,11 +1,12 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
-import HomePage from './app/components/HomePage';
+// import HomePage from './app/components/HomePage';
+// import ChatPage from './app/components/ChatPage';
 
 export type RootStackParamList = { 
     HomePage: undefined;
     Chat: undefined;
-
+    ChatPage: {roomId: string}
 }
 
 export type HomePageProps = NativeStackScreenProps<RootStackParamList, 'HomePage'> 
