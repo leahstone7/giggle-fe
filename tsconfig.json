@@ -1,4 +1,17 @@
 {
+<<<<<<< HEAD
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ],
+  "compilerOptions": {},
+  "extends": "expo/tsconfig.base"
+=======
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "strict": true,
@@ -14,4 +27,5 @@
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
   ]
+>>>>>>> main
 }
