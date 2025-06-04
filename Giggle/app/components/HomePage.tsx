@@ -4,8 +4,7 @@ import {View, Text} from "react-native"
 function HomePage() {
 return (
     <View>
-    <Text> 
-        
+    <Text>         
     </Text>
     </View>
 )
