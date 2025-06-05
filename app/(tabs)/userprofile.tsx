@@ -45,7 +45,7 @@ function UserProfile() {
       <Text > Drink preference: {user.drinkPreference}</Text>
        <Text > Seat preference: {user.seatPreference}</Text>
       <Text> Mosher: {user.drinkPreference}</Text>
-      <TouchableOpacity onPress={() => navigation.navigate("settings")}>
+      <TouchableOpacity onPress={() => alert("open settings")}>
         Settings
       </TouchableOpacity>
     </SafeAreaView>
