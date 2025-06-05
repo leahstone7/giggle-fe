@@ -4,7 +4,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
-import type { ChatPageParams } from '../../src/types'; 
+import type { ChatPageParams } from '../../../src/types'; 
 
 export default function ChatPage() {
   const { roomId } = useLocalSearchParams<ChatPageParams>();
