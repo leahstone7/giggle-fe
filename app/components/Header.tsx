@@ -1,49 +1,38 @@
 import { useFonts } from "expo-font";
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { ImageBackground, StyleSheet, Text, View } from "react-native";
 
 function Header() {
   const [fontsLoaded] = useFonts({
-    Playwrite: require("../assets/fonts/Playwrite_HU/PlaywriteFont.ttf" )
+    Merriweather: require("../assets/fonts/Merriweather/Merriweather/Merriweather.ttf" )
   });
 
   return (
-    <View style={styles.headerContainer}>
-      <View style={styles.logoContainer}>
-        <Image
-          source={require("../assets/images/giggle-logo.png")}
-          style={styles.logo}
-          resizeMode="contain"
-        />
-      </View>
-      <Text style={styles.headerTitle}>Giggle</Text>
-    </View>
-  );
+  <ImageBackground
+      source={require("../assets/images/giggle-logo.png")}
+      style={styles.headerContainer}
+      resizeMode="cover"
+    >
+    </ImageBackground>
+  )
 }
 export default Header;
 
 const styles = StyleSheet.create({
   headerContainer: {
-    backgroundColor: "#bdfcc9",
-    width: "90%",
+    width: "100%",
+    height: 200,
+    justifyContent: "center",
     alignItems: "center",
-    borderRadius: 20,
-    margin: 15,
-    padding: 30,
+    overflow: "hidden"
+  },
+  header: {
+    padding: 10,
+    borderRadius: 10,
   },
   headerTitle: {
-    fontSize: 40,
-    marginRight: 10,
+    fontSize: 36,
     fontFamily: "Playwrite",
+    color: "#fff",
   },
-  logo: {
-    width: 150,
-    height: 75,
-  },
-  logoContainer: {
-    flexDirection: "column",
-    position: "absolute",
-    top: 20,
-    right: 20,
-  },
-});
+})
