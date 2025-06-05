@@ -4,14 +4,14 @@ import { Image, StyleSheet, Text, View } from "react-native";
 
 function Header() {
   const [fontsLoaded] = useFonts({
-    Playwrite: require("./assets/fonts/Playwrite_HU/PlaywriteFont.ttf"),
+    Playwrite: require("../assets/fonts/Playwrite_HU/PlaywriteFont.ttf" )
   });
 
   return (
     <View style={styles.headerContainer}>
       <View style={styles.logoContainer}>
         <Image
-          source={require("./assets/images/giggle-logo.png")}
+          source={require("../assets/images/giggle-logo.png")}
           style={styles.logo}
           resizeMode="contain"
         />
