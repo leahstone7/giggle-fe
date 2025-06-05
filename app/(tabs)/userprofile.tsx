@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 function UserProfile() {
   const [user, setUser] = useState({
@@ -24,13 +24,15 @@ function UserProfile() {
   return (
     <SafeAreaProvider>
     <SafeAreaView style={styles.container}>
+      <ScrollView>
+
    <Image
         style={styles.avatar}
         resizeMode="contain"
         source={{
           uri: user.profilePicture,
         }}
-      />
+        />
       <View style={styles.personalInfo}>
       <Text style={styles.username}>{user.firstName} {user.lastName}</Text>
       <Text style={styles.username}>{user.username}</Text>
@@ -51,6 +53,7 @@ function UserProfile() {
       <TouchableOpacity onPress={() => navigation.navigate("settings")} style={styles.button}>
       Settings
       </TouchableOpacity>
+        </ScrollView>
     </SafeAreaView>
     </SafeAreaProvider>
   );
