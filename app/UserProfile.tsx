@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
+
 function UserProfile() {
   const [user, setUser] = useState({
     username: "giggleFan",
