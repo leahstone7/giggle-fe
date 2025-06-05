@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View, TextInput } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View, TextInput, ScrollView } from "react-native";
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
+
 function UserProfile() {
   const [user, setUser] = useState({
     firstName: "Mr",
@@ -33,6 +34,7 @@ function UserProfile() {
   return (
     <SafeAreaProvider>
     <SafeAreaView style={styles.container}>
+      <ScrollView>
 
    <Image
         style={styles.avatar}
@@ -106,6 +108,7 @@ function UserProfile() {
         <Text style={styles.text}> Photographer: {trueFalse(user.photographer)}</Text>
         <Text style={styles.text}> Trust Rating (/10): {user.trustRating}⋆</Text>
           </View>
+          </ScrollView>
       </SafeAreaView>
       </SafeAreaProvider>
       
