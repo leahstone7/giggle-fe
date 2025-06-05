@@ -18,7 +18,7 @@ function UserProfile() {
     singalong: true,
     photographer: false,
     trustRating: 1.0,
-    isVerified: true,
+    isVerified: true, //green tick next to username/pic later
   });
  
 
@@ -41,6 +41,10 @@ function UserProfile() {
       <Text style={styles.interests}> Drink preference: {user.drinkPreference}</Text>
        <Text style={styles.interests}> Seat preference: {user.seatPreference}</Text>
         <Text style={styles.interests}> Mosher: {user.drinkPreference}</Text>
+        <Text style={styles.interests}> Sing-a -long: {user.singalong}</Text>
+        <Text style={styles.interests}> Photographer: {user.photographer}</Text>
+        <Text style={styles.interests}> Trust Rating: {user.trustRating}</Text>
+       
     </View>
   );
 }
