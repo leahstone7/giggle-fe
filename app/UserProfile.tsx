@@ -1,26 +1,55 @@
 import { useState } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
+
+
 function UserProfile() {
   const [user, setUser] = useState({
+    firstName: "Mr",
+    lastName: "Giggle",
     username: "giggleFan",
     emailAddress: "giggleFan@gmail.com",
+    dateOfBirth: "1949-09-23",
+    location: "London, NW 123",
+    gender: "Male",
     profilePicture: "https://robohash.org/mail@ashallendesign.co.uk",
     concertInterests: "dancing, close to front, get there early",
+    drinkPreference: "A bit",
+    seatPreference: "Standing",
+    mosher: true,
+    singalong: true,
+    photographer: false,
+    trustRating: 1.0,
+    isVerified: true,
   });
-  const [loading, setLoading] = useState(false);
+
+
 
   return (
-    <View>
-      <Image
+    <SafeAreaProvider>
+    <SafeAreaView style={styles.container}>
+   <Image
         style={styles.avatar}
         resizeMode="contain"
         source={{
           uri: user.profilePicture,
         }}
       />
+      <Text style={styles.username}>{user.firstName} {user.lastName}</Text>
       <Text style={styles.username}>{user.username}</Text>
       <Text style={styles.email}>{user.emailAddress}</Text>
-    </View>
+       <Text style={styles.email}>{user.location}</Text>
+      <Text style={styles.username}> {user.dateOfBirth}</Text>
+       <Text style={styles.email}>{user.gender}</Text>
+      <Text style={styles.email}>Concert Preferences:</Text>
+      <Text > Drink preference: {user.drinkPreference}</Text>
+       <Text > Seat preference: {user.seatPreference}</Text>
+      <Text> Mosher: {user.drinkPreference}</Text>
+      <TouchableOpacity onPress={() => navigation.navigate("settings")}>
+        Settings
+      </TouchableOpacity>
+    </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 const styles = StyleSheet.create({
@@ -29,6 +58,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 20,
     backgroundColor: "#ffffff",
+   
   },
   avatar: {
     width: 150,
