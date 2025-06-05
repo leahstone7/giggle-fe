@@ -5,7 +5,7 @@ export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{flex: 1, backgroundColor: '#000'}}>
-        <Stack>
+        <Stack screenOptions={{headerShown: false}}>
           <Stack.Screen name="index" options={{title: "Home"}}/>
           <Stack.Screen name="Wishlist" options={{title: "Wishlist"}}/>
           <Stack.Screen name="Messages" options={{title: "Messages"}}/>

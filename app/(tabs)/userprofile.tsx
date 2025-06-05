@@ -33,13 +33,14 @@ function UserProfile() {
   return (
     <SafeAreaProvider>
     <SafeAreaView style={styles.container}>
+
    <Image
         style={styles.avatar}
         resizeMode="contain"
         source={{
           uri: user.profilePicture,
         }}
-      />
+        />
       <View style={styles.personalInfo}>
        { isEditing ? (
         <>
