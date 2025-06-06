@@ -42,7 +42,7 @@ function UserProfile() {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <Image
             style={styles.avatar}
             resizeMode="contain"
