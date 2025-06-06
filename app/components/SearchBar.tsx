@@ -14,7 +14,10 @@ function SearchEvents(  ){
     <View style={styles.searchSectionWrapper} >
         <View style={styles.searchBar}>
             <Ionicons name="search" size={20} style={{marginRight: 5}}/>
-            <TextInput placeholder="Search for events ..." />
+            <TextInput placeholder="Search for events ..." 
+            onChangeText={(e)=> setSearchQuery(e)}
+            
+            />
         </View>
         <View>
             <TouchableOpacity onPress={()=> {console.log("button pressed")}} style={styles.filterBtn}>
