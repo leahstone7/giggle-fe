@@ -14,6 +14,7 @@ export default function Index(){
             {/* <Link href={"/userprofile"}> Home page</Link> */}
             {/* <Header /> */}
             <SearchEvents />
+            {/* Events list scroller  */}
         </View>
     )
 }

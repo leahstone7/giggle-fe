@@ -9,7 +9,7 @@ import {
   TextInput,
   View,
 } from "react-native";
-import { io } from "socket.io-client";
+ import { io } from "socket.io-client";
 
 const BASE_URL = "http://192.168.1.25:9090"; // can replace with own local IP if wanting to test
 const socket = io(BASE_URL);
