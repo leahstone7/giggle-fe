@@ -4,7 +4,7 @@
     "slug": "Giggle",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/giggle-logo.png",
+    "icon": "./app/assets/images/giggle-logo.png",
     "scheme": "giggle",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -13,7 +13,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/giggle-logo.png",
+        "foregroundImage": "./app/assets/images/giggle-logo.png",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true
@@ -21,14 +21,14 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/giggle-logo.png"
+      "favicon": "./app/assets/images/giggle-logo.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/giggle-logo.png",
+          "image": "./app/assets/images/giggle-logo.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
