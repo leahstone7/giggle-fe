@@ -1,5 +1,18 @@
 import axios from "axios";
 
+const giggleApi = axios.create({
+    baseURL: "https://giggle-api.onrender.com/api/"
+})
+
+export const getAllEvents = () => {
+    return giggleApi
+    .get("/events")
+    .then((res)=> {
+        return res.data.events
+    })
+}
+import axios from "axios";
+
 const apiClient = axios.create({baseURL: "https://giggle-api.onrender.com/api/"})
 
 export const patchUser = (user_id, dataToUpdate) => {
