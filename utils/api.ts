@@ -3,8 +3,11 @@ import axios from "axios";
 const tmApi = axios.create({
   baseURL: "https://app.ticketmaster.com",
 });
-
 const apiKey = "God8qZUmwTZiQEscYjwuFJ6OVTnfLZO9";
+
+const giggleApi = axios.create({
+  baseURL: "https://giggle-api.onrender.com/api",
+});
 
 export const getTMEventsByKeyword = (searchTerm) => {
   return tmApi
@@ -22,4 +25,8 @@ export const getTMEventById = (tmEventId) => {
     .then(({ data }) => {
       return data;
     });
+};
+
+export const postNewEventToDb = (eventToAdd) => {
+  return giggleApi.post(`events`, eventToAdd).then(() => {});
 };
