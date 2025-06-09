@@ -62,6 +62,7 @@ export default function EventList() {
     <View
       style={{
         flexDirection: "row",
+        flex: 1
       }}
     >
       <Image
