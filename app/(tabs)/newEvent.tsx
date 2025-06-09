@@ -3,16 +3,17 @@ import { Text, View } from "react-native";
 import { styles } from "../../styles/auth.styles";
 import SearchTMEvents from "../components/TicketmasterSearchBar";
 
-const [tmEvents, setTmEvents] = useState([]);
 
 //search for new event serachbar WITH A SEARCH BUTTON
 //calls ticketmaster USEEFFECT ONCE ONCE ONCE ONCE ONCE  BASED ON SEARCH BUTTON
 //click it as a link to...add?
 //automatically posts to our server
 //thanks, event added!
-console.log(tmEvents)
 
 export default function newEvent() {
+    const [tmEvents, setTmEvents] = useState([]);
+
+
   return (
     <View style={styles.container}>
       <Text>Couldn't find the event you were looking for? Add it here!</Text>

@@ -3,15 +3,15 @@ import React from "react";
 import { Button, StyleSheet, TextInput, View } from "react-native";
 import { getTMEventsByKeyword } from "../../utils/api";
 
-function SearchTMEvents({ setTmEvents}) {
+function SearchTMEvents({setTmEvents}) {
   const [searchQuery, setSearchQuery] = React.useState("");
 
-//UPDAET SEARCH WUERY ON CHANGE TEXT HERE IN FUNCTION INSTEAD OF IN RETURN LINE 24
+  //UPDAET SEARCH WUERY ON CHANGE TEXT HERE IN FUNCTION INSTEAD OF IN RETURN LINE 24
 
   const searchTM = () => {
     getTMEventsByKeyword(searchQuery).then((events) => {
       console.log(events);
-      setTmEvents(events);
+        setTmEvents(events);
     });
   };
 
