@@ -100,7 +100,9 @@ export default function EventList() {
           }}
           onPress={()=> {console.log("Find tickets pressed")}}
         >
+
           <Ionicons name="ticket-outline" size={20}  style={{marginRight: 8}} color="blue"/>
+
           <Text style={{fontSize: 16}}>Find tickets</Text>
         </TouchableOpacity>
       </View>
