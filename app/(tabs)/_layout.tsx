@@ -52,6 +52,14 @@ export default function TabLayout() {
           ),
         }}
       />
+       <Tabs.Screen
+        name="listticket"
+        options={{
+          tabBarIcon: ({ size, color }) => (
+           <Ionicons name="add-circle-outline" size={32} color="6C584C"/>
+          ),
+        }}
+      />
     </Tabs>
   );
 }
