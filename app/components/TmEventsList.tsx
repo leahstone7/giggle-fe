@@ -11,26 +11,28 @@ import { postNewEventToDb } from "../../utils/api";
 //need to use day.js or whatever it's called to prettify the date format
 
 function TmEventsList({ tmEvents, setHasPostedEvent }) {
-  const testStaticArray = [
-    {
-      event_artist: "Bruce Springsteen",
-      event_location: "Leeds",
-      event_date: "2027-06-01T00:20:00Z",
-      event_venue: "Brude",
-    },
-    {
-      event_artist: "Megan Thee Stallion",
-      event_location: "Manchester",
-      event_date: "2027-07-01T00:20:00Z",
-      event_venue: "O2 Apollo",
-    },
-    {
-      event_artist: "Bruce",
-      event_location: "London",
-      event_date: "2027-08-01T00:20:00Z",
-      event_venue: "Alexandra Palace",
-    },
-  ];
+
+    //below array useful for testing when we hit the ticketmaster time out!
+//   const testStaticArray = [
+//     {
+//       event_artist: "Bruce Springsteen",
+//       event_location: "Leeds",
+//       event_date: "2027-06-01T00:20:00Z",
+//       event_venue: "Brude",
+//     },
+//     {
+//       event_artist: "Megan Thee Stallion",
+//       event_location: "Manchester",
+//       event_date: "2027-07-01T00:20:00Z",
+//       event_venue: "O2 Apollo",
+//     },
+//     {
+//       event_artist: "Bruce",
+//       event_location: "London",
+//       event_date: "2027-08-01T00:20:00Z",
+//       event_venue: "Alexandra Palace",
+//     },
+//   ];
 
   const addNewEvent = (item) => {
     setHasPostedEvent(true);
@@ -60,7 +62,7 @@ function TmEventsList({ tmEvents, setHasPostedEvent }) {
 
   return (
     <View>
-      <FlatList data={testStaticArray} renderItem={renderItem} />
+      <FlatList data={tmEvents} renderItem={renderItem} />
     </View>
   );
 }
