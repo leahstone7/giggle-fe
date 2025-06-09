@@ -28,7 +28,7 @@ export default function Login() {
       style={{ flex: 1 }}
       behavior={Platform.OS === "android" ? "padding" : "height"}
     >
-      <View style={styles.container}>
+      <View >
         {/*BRAND SECTION */}
         <View style={styles.brandSection}>
           <Text style={styles.appName}>Giggle</Text>
