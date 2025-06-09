@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 import { Searchbar } from "react-native-paper";
 
@@ -8,20 +8,33 @@ import { Searchbar } from "react-native-paper";
 function SearchEvents(  ){
 
     
-  const [searchQuery, setSearchQuery] = React.useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([])
+
+function handleSearch(){
+  fetch(
+    `https://giggle-api.onrender.com/api/`
+    
+  )
+}
 
   return (
     <View style={styles.searchSectionWrapper} >
         <View style={styles.searchBar}>
             <Ionicons name="search" size={20} style={{marginRight: 5}}/>
-            <TextInput placeholder="Search for events ..." 
+            <TextInput 
+            value={searchQuery}
             onChangeText={(e)=> setSearchQuery(e)}
+            placeholder="Search for events ..." 
             
             />
         </View>
         <View>
-            <TouchableOpacity onPress={()=> {console.log("button pressed")}} style={styles.filterBtn}>
-                <Ionicons name="options" size={30} color={'black'}/>
+            <TouchableOpacity onPress={()=> {console.log(" filter button pressed")}} style={styles.filterBtn}>
+                <Ionicons name="options" size={30} color={'black'} style={{
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}/>
             </TouchableOpacity>
             
         </View>
@@ -51,6 +64,7 @@ const styles=StyleSheet.create({
     padding: 12,
     borderRadius: 10,
     backgroundColor: '#efefef',
+    
 
    }
 })

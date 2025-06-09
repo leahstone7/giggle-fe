@@ -86,8 +86,8 @@ export default function EventList() {
         >
           {item.event_artist}
         </Text>
-        <Text>{item.event_location}.</Text>
         <Text>{item.event_venue}.</Text>
+        <Text>{item.event_location}.</Text>
         <Text>{formatEventDate(item.event_date)}</Text>
 
         <TouchableOpacity
@@ -100,7 +100,9 @@ export default function EventList() {
           }}
           onPress={()=> {console.log("Find tickets pressed")}}
         >
-          <Ionicons name="ticket-outline" size={20}  style={{marginRight: 8}} />
+
+          <Ionicons name="ticket-outline" size={20}  style={{marginRight: 8}} color="blue"/>
+
           <Text style={{fontSize: 16}}>Find tickets</Text>
         </TouchableOpacity>
       </View>
