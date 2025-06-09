@@ -11,7 +11,7 @@ export const getAllEvents = () => {
         return res.data.events
     })
 }
-import axios from "axios";
+
 
 const apiClient = axios.create({baseURL: "https://giggle-api.onrender.com/api/"})
 
