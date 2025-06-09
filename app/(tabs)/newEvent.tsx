@@ -1,18 +1,15 @@
 import React, { useState } from "react";
 import { Text, View } from "react-native";
 import { styles } from "../../styles/auth.styles";
-import SearchTMEvents from "../components/TicketmasterSearchBar";
+import SearchTMEvents from "../components/SearchTmEvents";
+import TmEventsList from "../components/TmEventsList";
 
-
-//search for new event serachbar WITH A SEARCH BUTTON
-//calls ticketmaster USEEFFECT ONCE ONCE ONCE ONCE ONCE  BASED ON SEARCH BUTTON
 //click it as a link to...add?
 //automatically posts to our server
 //thanks, event added!
 
 export default function newEvent() {
-    const [tmEvents, setTmEvents] = useState([]);
-
+  const [tmEvents, setTmEvents] = useState([]);
 
   return (
     <View style={styles.container}>
@@ -21,8 +18,10 @@ export default function newEvent() {
         (This page will be moved off the navbar and accessible through a link on
         the homepage)
       </Text>
-      <SearchTMEvents setTmEvents={setTmEvents} /> 
-  {/* map through events and map the details, plus a button for add */}
-    </View> 
+      <SearchTMEvents setTmEvents={setTmEvents} />
+
+      {/* {tmEvents.length > 0 ? (<TmEventsList tmEvents={tmEvents} ></TmEventsList>) : (null)} */}
+      <TmEventsList tmEvents={tmEvents}></TmEventsList>
+    </View>
   );
 }
