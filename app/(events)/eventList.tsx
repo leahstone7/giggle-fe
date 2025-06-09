@@ -1,7 +1,15 @@
 import { getAllEvents } from "@/utils/api";
 import formatEventDate from "@/utils/dateUtils";
+import { Ionicons } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
-import { FlatList, Image, RefreshControl, Text, View } from "react-native";
+import {
+  FlatList,
+  Image,
+  RefreshControl,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import Loader from "../components/loader";
 
@@ -51,19 +59,51 @@ export default function EventList() {
   };
 
   const renderEvent = ({ item }: { item: Event }) => (
-    <View>
+    <View
+      style={{
+        flexDirection: "row",
+      }}
+    >
       <Image
         source={require("../assets/images/login-logo.png")}
         style={{
-          width: "100%",
-          height: undefined,
+          width: "30%",
+          height: "30%",
           aspectRatio: 1,
+          resizeMode: "contain",
         }}
       />
-      <Text>{item.event_artist}</Text>
-      <Text>{item.event_location}.</Text>
-      <Text>{item.event_venue}.</Text>
-      <Text>{formatEventDate(item.event_date)}</Text>
+      <View
+        style={{
+          paddingTop: 16,
+          paddingLeft: 20,
+        }}
+      >
+        <Text
+          style={{
+            fontWeight: "bold",
+          }}
+        >
+          {item.event_artist}
+        </Text>
+        <Text>{item.event_location}.</Text>
+        <Text>{item.event_venue}.</Text>
+        <Text>{formatEventDate(item.event_date)}</Text>
+
+        <TouchableOpacity
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+            paddingTop: 5,
+            paddingBottom: 12
+          }}
+          onPress={()=> {console.log("Find tickets pressed")}}
+        >
+          <Ionicons name="ticket-outline" size={20}  style={{marginRight: 8}} />
+          <Text style={{fontSize: 16}}>Find tickets</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 
