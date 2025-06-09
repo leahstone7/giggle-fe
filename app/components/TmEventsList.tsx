@@ -1,42 +1,40 @@
-import { postNewEventToDb } from "@/utils/api";
 import React from "react";
 import {
-  //   Button,
   FlatList,
   StyleSheet,
   Text,
-  //   TouchableHighlight,
   TouchableOpacity,
   View,
 } from "react-native";
+import { postNewEventToDb } from "../../utils/api";
 
-//calls our api to post event to db
 //need to use day.js or whatever it's called to prettify the date format
 
-function TmEventsList({ tmEvents }) {
+function TmEventsList({ tmEvents, setHasPostedEvent }) {
   const testStaticArray = [
     {
       event_artist: "Bruce Springsteen",
       event_location: "Leeds",
-      event_date: "Today",
+      event_date: "2027-06-01T00:20:00Z",
       event_venue: "Brude",
     },
     {
       event_artist: "Megan Thee Stallion",
-      event_location: "Manch",
-      event_date: "25-08-2026",
+      event_location: "Manchester",
+      event_date: "2027-07-01T00:20:00Z",
       event_venue: "O2 Apollo",
     },
     {
       event_artist: "Bruce",
       event_location: "London",
-      event_date: "Next month",
+      event_date: "2027-08-01T00:20:00Z",
       event_venue: "Alexandra Palace",
     },
   ];
 
-  const addNewEvent = () => {
-    return postNewEventToDb().then(() => {});
+  const addNewEvent = (item) => {
+    setHasPostedEvent(true);
+    return postNewEventToDb(item).then(() => {});
   };
 
   const renderItem = ({ item }) => {
@@ -48,10 +46,13 @@ function TmEventsList({ tmEvents }) {
         <Text style={styles.item}>
           {item.event_venue} on {item.event_date}
         </Text>
-        <TouchableOpacity style={styles.button} onPress={addNewEvent}>
-            <Text>
-          Add this event to Giggle!
-          </Text>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            addNewEvent(item);
+          }}
+        >
+          <Text>Add this event to Giggle!</Text>
         </TouchableOpacity>
       </View>
     );
@@ -59,7 +60,7 @@ function TmEventsList({ tmEvents }) {
 
   return (
     <View>
-      <FlatList data={tmEvents} renderItem={renderItem} />
+      <FlatList data={testStaticArray} renderItem={renderItem} />
     </View>
   );
 }
