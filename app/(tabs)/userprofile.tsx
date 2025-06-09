@@ -42,112 +42,121 @@ function UserProfile() {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <Image
-            style={styles.avatar}
-            resizeMode="contain"
-            source={{
-              uri: user.profilePicture,
-            }}
-          />
-          <View style={styles.personalInfo}>
-            {isEditing ? (
-              <>
-                <Text>Edit your profile here...</Text>
-                <TextInput
-                  style={styles.input}
-                  value={user.firstName}
-                  onChangeText={(text) => handleChange("firstName", text)}
-                />
-                <TextInput
-                  style={styles.input}
-                  value={user.lastName}
-                  onChangeText={(text) => handleChange("lastName", text)}
-                />
-                <TextInput
-                  style={styles.input}
-                  value={user.username}
-                  onChangeText={(text) => handleChange("username", text)}
-                />
-                <TextInput
-                  style={styles.input}
-                  value={user.emailAddress}
-                  onChangeText={(text) => handleChange("emailAddress", text)}
-                />
-                <TextInput
-                  style={styles.input}
-                  value={user.location}
-                  onChangeText={(text) => handleChange("location", text)}
-                />
-                <TextInput
-                  style={styles.input}
-                  value={user.dateOfBirth}
-                  onChangeText={(text) => handleChange("dateOfBirth", text)}
-                />
-                <TextInput
-                  style={styles.input}
-                  value={user.gender}
-                  onChangeText={(text) => handleChange("gender", text)}
-                />
-              </>
-            ) : (
-              <>
-                <Text style={styles.username}>
-                  {user.firstName} {user.lastName}
-                </Text>
-                <Text style={styles.username}>{user.username}</Text>
-                <Text style={styles.text}>{user.emailAddress}</Text>
-                <Text style={styles.text}>{user.location}</Text>
-                <Text style={styles.text}> Born in: {birthYear}</Text>
-                <Text style={styles.text}>{user.gender}</Text>
-                <TouchableOpacity
-                  onPress={() => setIsEditing(!isEditing)}
-                  style={styles.button}
-                >
-                  {isEditing ? "Save" : "Edit Profile"}
-                </TouchableOpacity>
-              </>
-            )}
-          </View>
-          <View style={styles.preferences}>
-            <Text style={styles.title}>Concert Preferences:</Text>
-            <Text style={styles.text}>
-              {" "}
-              Drink alchohol: {user.drinkPreference}
-            </Text>
-            <Text style={styles.text}>
-              {" "}
-              Seat preference: {user.seatPreference}
-            </Text>
-            <Text style={styles.text}>
-              {" "}
-              Mosher: {trueFalse(user.drinkPreference)}
-            </Text>
-            <Text style={styles.text}>
-              {" "}
-              Singalong: {trueFalse(user.singalong)}
-            </Text>
-            <Text style={styles.text}>
-              {" "}
-              Photographer: {trueFalse(user.photographer)}
-            </Text>
-            <Text style={styles.text}>
-              {" "}
-              Trust Rating (/10): {user.trustRating}⋆
-            </Text>
+        <ScrollView
+          contentContainerStyle={styles.scrollContent}
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
+        >
+          <View style={{ alignItems: "center" }}>
+            <Image
+              style={styles.avatar}
+              resizeMode="contain"
+              source={{
+                uri: user.profilePicture,
+              }}
+            />
+            <View style={styles.personalInfo}>
+              {isEditing ? (
+                <>
+                  <Text>Edit your profile here...</Text>
+                  <TextInput
+                    style={styles.input}
+                    value={user.firstName}
+                    onChangeText={(text) => handleChange("firstName", text)}
+                  />
+                  <TextInput
+                    style={styles.input}
+                    value={user.lastName}
+                    onChangeText={(text) => handleChange("lastName", text)}
+                  />
+                  <TextInput
+                    style={styles.input}
+                    value={user.username}
+                    onChangeText={(text) => handleChange("username", text)}
+                  />
+                  <TextInput
+                    style={styles.input}
+                    value={user.emailAddress}
+                    onChangeText={(text) => handleChange("emailAddress", text)}
+                  />
+                  <TextInput
+                    style={styles.input}
+                    value={user.location}
+                    onChangeText={(text) => handleChange("location", text)}
+                  />
+                  <TextInput
+                    style={styles.input}
+                    value={user.dateOfBirth}
+                    onChangeText={(text) => handleChange("dateOfBirth", text)}
+                  />
+                  <TextInput
+                    style={styles.input}
+                    value={user.gender}
+                    onChangeText={(text) => handleChange("gender", text)}
+                  />
+                  <TouchableOpacity
+                    onPress={() => setIsEditing(false)}
+                    style={styles.button}
+                  >
+                    <Text style={styles.buttonText}>Save</Text>
+                  </TouchableOpacity>
+                </>
+              ) : (
+                <>
+                  <Text style={styles.username}>
+                    {user.firstName} {user.lastName}
+                  </Text>
+                  <Text style={styles.username}>{user.username}</Text>
+                  <Text style={styles.text}>{user.emailAddress}</Text>
+                  <Text style={styles.text}>{user.location}</Text>
+                  <Text style={styles.text}>Born in: {birthYear}</Text>
+                  <Text style={styles.text}>{user.gender}</Text>
+                  <TouchableOpacity
+                    onPress={() => setIsEditing(true)}
+                    style={styles.button}
+                  >
+                    <Text style={styles.buttonText}>Edit Profile</Text>
+                  </TouchableOpacity>
+                </>
+              )}
+            </View>
+
+            <View style={styles.preferences}>
+              <Text style={styles.title}>Concert Preferences:</Text>
+              <Text style={styles.text}>
+                Drink alcohol: {user.drinkPreference}
+              </Text>
+              <Text style={styles.text}>
+                Seat preference: {user.seatPreference}
+              </Text>
+              <Text style={styles.text}>
+                Mosher: {trueFalse(user.mosher)}
+              </Text>
+              <Text style={styles.text}>
+                Singalong: {trueFalse(user.singalong)}
+              </Text>
+              <Text style={styles.text}>
+                Photographer: {trueFalse(user.photographer)}
+              </Text>
+              <Text style={styles.text}>
+                Trust Rating (/10): {user.trustRating}⋆
+              </Text>
+            </View>
           </View>
         </ScrollView>
       </SafeAreaView>
     </SafeAreaProvider>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    padding: 20,
     backgroundColor: "#FFFFFF",
-    justifyContent: "center",
+  },
+  scrollContent: {
+    alignItems: "center",
+    paddingBottom: 40,
   },
   avatar: {
     width: 150,
@@ -155,6 +164,7 @@ const styles = StyleSheet.create({
     borderColor: "#252F40",
     borderWidth: 3,
     borderRadius: 75,
+    marginTop: 20,
     marginBottom: 16,
   },
   username: {
@@ -163,29 +173,34 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 15,
-    padding: 10,
+    padding: 5,
+    textAlign: "center",
   },
   title: {
     fontSize: 15,
     fontWeight: "bold",
     textDecorationLine: "underline",
+    marginBottom: 10,
   },
   button: {
     borderRadius: 10,
-    width: "50%",
-    padding: 5,
+    width: "60%",
+    padding: 10,
     backgroundColor: "rgb(44, 131, 44)",
     alignItems: "center",
+    marginTop: 10,
+  },
+  buttonText: {
+    color: "white",
     fontWeight: "bold",
   },
   personalInfo: {
     alignItems: "center",
     padding: 20,
     backgroundColor: "rgb(253, 252, 242)",
-    justifyContent: "center",
     borderRadius: 30,
-    width: "70%",
-    marginBottom: 5,
+    width: "80%",
+    marginBottom: 10,
   },
   preferences: {
     alignItems: "center",
@@ -193,13 +208,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "rgb(253, 252, 242)",
     borderColor: "#228B22",
+    borderRadius: 20,
+    width: "80%",
   },
   input: {
-    padding: 5,
+    width: "100%",
+    padding: 8,
     marginBottom: 10,
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 8,
   },
 });
-export default UserProfile;
+
+export default UserProfile
