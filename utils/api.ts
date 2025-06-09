@@ -11,7 +11,6 @@ export const getAllEvents = () => {
         return res.data.events
     })
 }
-import axios from "axios";
 
 const apiClient = axios.create({baseURL: "https://giggle-api.onrender.com/api/"})
 
@@ -29,6 +28,16 @@ export const getUserByUserId = (user_id) => {
     return apiClient.get(`users/${user_id}`)
     .then(({data: {user}}) => {
         return user
+    })
+    .catch((err) => {
+        return Promise.reject(err)
+    })
+}
+
+export const postTicket = ({owner_username, seating, eventDetails, notes, hasBeenClaimed}) => {
+    return apiClient.post("tickets", {owner_username, seating, eventDetails, notes, hasBeenClaimed} )
+    .then(({data: {ticket}}) => {
+        return ticket
     })
     .catch((err) => {
         return Promise.reject(err)
