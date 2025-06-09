@@ -12,6 +12,7 @@ export const getAllEvents = () => {
     })
 }
 
+
 const apiClient = axios.create({baseURL: "https://giggle-api.onrender.com/api/"})
 
 export const patchUser = (user_id, dataToUpdate) => {
