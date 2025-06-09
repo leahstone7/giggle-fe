@@ -34,3 +34,13 @@ export const getUserByUserId = (user_id) => {
         return Promise.reject(err)
     })
 }
+
+export const postTicket = ({owner_username, seating, eventDetails, notes, hasBeenClaimed}) => {
+    return apiClient.post("tickets", {owner_username, seating, eventDetails, notes, hasBeenClaimed} )
+    .then(({data: {ticket}}) => {
+        return ticket
+    })
+    .catch((err) => {
+        return Promise.reject(err)
+    })
+}

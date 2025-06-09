@@ -78,7 +78,6 @@ function UserProfile() {
   const [isEditing, setIsEditing] = useState(false);
   
   function handleChange(key, value) {
-    console.log(key)
     setUser((prev) => ({ ...prev, [key]: value }));
   }
 
