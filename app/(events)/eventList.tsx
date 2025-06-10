@@ -46,6 +46,10 @@ export default function EventList() {
 
   const [sortOption, setSortOption] = useState<string | null>(null);
 
+  // Filter by location
+
+  const [locationFilter, setLocationFilter] = useState<string | null> (null);
+
   const fetchEvents = useCallback((refresh = false) => {
     refresh ? setRefreshing(true) : setLoading(true);
     setError(null);
@@ -74,7 +78,7 @@ export default function EventList() {
     let timer;
 
     const filterEvents = () => {
-      if (!searchQuery.trim()) {
+      if (!searchQuery.trim() && !locationFilter) {
         setFilteredEvents(events);
         return;
       }
@@ -82,11 +86,16 @@ export default function EventList() {
       const formattedquery = searchQuery.toLowerCase();
 
       const filteredData = events.filter((event) => {
-        return (
+       
+        const matchesSearch = searchQuery.trim() === '' ||
           event.event_artist.toLowerCase().includes(formattedquery) ||
           event.event_location.toLowerCase().includes(formattedquery) ||
           event.event_venue.toLowerCase().includes(formattedquery)
-        );
+        
+          const matchesLocation = !locationFilter || event.event_location === locationFilter;
+
+          return matchesSearch && matchesLocation;
+          
       });
       setFilteredEvents(filteredData);
     };
@@ -96,7 +105,7 @@ export default function EventList() {
     return () => {
       if (timer) clearTimeout(timer);
     };
-  }, [searchQuery, events]);
+  }, [searchQuery, events, locationFilter]);
 
   // Sort events
 
@@ -114,12 +123,19 @@ export default function EventList() {
     });
   };
 
+  // Filter by location button handler
+
+  const filterByLocation = (location: string | null) => {
+    setLocationFilter(location);
+  }
+  
+
   const handleRefresh = useCallback(() => {
     setRefreshing(true);
 
     setSearchQuery("");
     setSortOption(null);
-
+    setLocationFilter(null);
     fetchEvents(true);
 
     setRefreshing(false);
@@ -224,10 +240,13 @@ export default function EventList() {
           onChangeText={setSearchQuery}
         />
       </View>
-      <View style={{ flexDirection: "row" }}>
+      <View style={{ display: "flex" ,
+        flexDirection: 'row',
+      
+      }}>
         <SortBy onSortChange={setSortOption} 
        />
-        <FilterBtn />
+        <FilterBtn onLocationChange={filterByLocation} />
       </View>
       <FlatList
         data={getSortedEvents(filteredEvents)}
