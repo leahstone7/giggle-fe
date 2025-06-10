@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ScrollView, StyleSheet, Text } from "react-native";
+import { RefreshControl, ScrollView, StyleSheet, Text } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 // import { styles } from "../../styles/auth.styles";
 import SearchTMEvents from "../components/SearchTmEvents";
@@ -8,39 +8,40 @@ import TmEventsList from "../components/TmEventsList";
 //NEED TO IMPLEMENT REFRESH - app-wide?
 
 export default function newEvent() {
-  // const [refreshing, setRefreshing] = React.useState(false);
-
-  // const onRefresh = React.useCallback(() => {
-  //   setRefreshing(true);
-  //   setTimeout(() => {
-  //     setRefreshing(false);
-  //   }, 2000);
-  // }, []);
-
+  const [refreshing, setRefreshing] = React.useState(false);
   const [tmEvents, setTmEvents] = useState([]);
   const [hasPostedEvent, setHasPostedEvent] = useState(false);
+  const [searchQuery, setSearchQuery] = React.useState("");
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setHasPostedEvent(false);
+    setSearchQuery("");
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
 
   return (
-    // <View style={styles.container}>
-    <ScrollView style={styles.container}>
-      <SafeAreaProvider>
-        <SafeAreaView style={styles.container}>
-          {/* <ScrollView
-          //   contentContainerStyle={styles.scrollView}
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.container}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={styles.container}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
-        > */}
-
+        >
           <Text style={styles.title}>
             Couldn't find the event you were looking for? Add it here!
           </Text>
-          <Text>
-            (note to giggle team: This page will probably be moved off the
-            navbar and accessible through a link on the homepage)
-          </Text>
 
-          <SearchTMEvents setTmEvents={setTmEvents} />
+          <SearchTMEvents
+            setTmEvents={setTmEvents}
+            setHasPostedEvent={setHasPostedEvent}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+          />
 
           {hasPostedEvent ? (
             <Text>
@@ -53,10 +54,9 @@ export default function newEvent() {
               setHasPostedEvent={setHasPostedEvent}
             ></TmEventsList>
           )}
-        </SafeAreaView>
-      </SafeAreaProvider>
-    </ScrollView>
-    // </View>
+        </ScrollView>
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#FFFFFF",
     padding: 10,
-    paddingBottom: 40,
+    paddingBottom: 60,
   },
   title: {
     color: "black",

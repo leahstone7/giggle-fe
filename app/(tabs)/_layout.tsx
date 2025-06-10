@@ -2,7 +2,7 @@ import { Ionicons } from "@expo/vector-icons";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { Tabs } from "expo-router";
 import React from "react";
-
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 export default function TabLayout() {
@@ -56,7 +56,15 @@ export default function TabLayout() {
         name="listticket"
         options={{
           tabBarIcon: ({ size, color }) => (
-           <Ionicons name="add-circle-outline" size={32} color="6C584C"/>
+           <Ionicons name="add-circle-outline" size={28} color="6C584C"/>
+          ),
+        }}
+      />
+             <Tabs.Screen
+        name="newEvent"
+        options={{
+          tabBarIcon: ({ size, color }) => (
+           <MaterialIcons name="event-available" size={26} color="6C584C" />
           ),
         }}
       />
