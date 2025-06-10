@@ -1,15 +1,16 @@
 import axios from "axios";
-
+import Constants from "expo-constants";
+const apiKey =
+  Constants.manifest?.extra?.API_KEY || Constants.expoConfig?.extra?.API_KEY;
+//manifest is deprecated but at the moment works better, have put expoConfig alternative in here too for future
 
 const tmApi = axios.create({
   baseURL: "https://app.ticketmaster.com",
 });
-const apiKey = "God8qZUmwTZiQEscYjwuFJ6OVTnfLZO9";
 
 const giggleApi = axios.create({
-    baseURL: "https://giggle-api.onrender.com/api/"
-})
-//note david push had no forward slash after giggle api - in case this breaks and he forgets
+  baseURL: "https://giggle-api.onrender.com/api/",
+});
 
 export const getTMEventsByKeyword = (searchTerm) => {
   return tmApi
@@ -33,45 +34,53 @@ export const postNewEventToDb = (eventToAdd) => {
   return giggleApi.post(`events`, eventToAdd).then(() => {});
 };
 
-
 export const getAllEvents = () => {
-    return giggleApi
-    .get("/events")
-    .then((res)=> {
-        return res.data.events
-    })
-}
-
-
-const apiClient = axios.create({baseURL: "https://giggle-api.onrender.com/api/"})
+  return giggleApi.get("/events").then((res) => {
+    return res.data.events;
+  });
+};
 
 export const patchUser = (user_id, dataToUpdate) => {
-    return apiClient.patch(`users/${user_id}`, dataToUpdate)
-    .then(({data: {updatedUser}}) => {
-        return updatedUser
+  return giggleApi
+    .patch(`users/${user_id}`, dataToUpdate)
+    .then(({ data: { updatedUser } }) => {
+      return updatedUser;
     })
     .catch((err) => {
-        return Promise.reject(err)
-    })
-}
+      return Promise.reject(err);
+    });
+};
 
 export const getUserByUserId = (user_id) => {
-    return apiClient.get(`users/${user_id}`)
-    .then(({data: {user}}) => {
-        return user
+  return giggleApi
+    .get(`users/${user_id}`)
+    .then(({ data: { user } }) => {
+      return user;
     })
     .catch((err) => {
-        return Promise.reject(err)
-    })
-}
+      return Promise.reject(err);
+    });
+};
 
-export const postTicket = ({owner_username, seating, eventDetails, notes, hasBeenClaimed}) => {
-    return apiClient.post("tickets", {owner_username, seating, eventDetails, notes, hasBeenClaimed} )
-    .then(({data: {ticket}}) => {
-        return ticket
+export const postTicket = ({
+  owner_username,
+  seating,
+  eventDetails,
+  notes,
+  hasBeenClaimed,
+}) => {
+  return giggleApi
+    .post("tickets", {
+      owner_username,
+      seating,
+      eventDetails,
+      notes,
+      hasBeenClaimed,
+    })
+    .then(({ data: { ticket } }) => {
+      return ticket;
     })
     .catch((err) => {
-        return Promise.reject(err)
-    })
-}
-
+      return Promise.reject(err);
+    });
+};
