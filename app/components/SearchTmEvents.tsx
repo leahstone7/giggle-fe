@@ -16,6 +16,7 @@ function SearchTMEvents({ setTmEvents }) {
           eventObj.event_location = singleEvent._embedded.venues[0].city.name;
           eventObj.event_date = singleEvent.dates.start.dateTime;
           eventObj.event_venue = singleEvent._embedded.venues[0].name;
+          eventObj.event_img = singleEvent.images[0].url;
           eventArr.push(eventObj);
           return eventArr;
         });
@@ -53,6 +54,6 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     width: 300,
-    alignSelf: 'center'
+    alignSelf: "center",
   },
 });
