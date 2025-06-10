@@ -39,13 +39,9 @@ export const getAllEvents = () => {
     return res.data.events;
   });
 };
-//refactor at some point to use the giggleApi and remove this
-const apiClient = axios.create({
-  baseURL: "https://giggle-api.onrender.com/api/",
-});
 
 export const patchUser = (user_id, dataToUpdate) => {
-  return apiClient
+  return giggleApi
     .patch(`users/${user_id}`, dataToUpdate)
     .then(({ data: { updatedUser } }) => {
       return updatedUser;
@@ -56,7 +52,7 @@ export const patchUser = (user_id, dataToUpdate) => {
 };
 
 export const getUserByUserId = (user_id) => {
-  return apiClient
+  return giggleApi
     .get(`users/${user_id}`)
     .then(({ data: { user } }) => {
       return user;
@@ -73,7 +69,7 @@ export const postTicket = ({
   notes,
   hasBeenClaimed,
 }) => {
-  return apiClient
+  return giggleApi
     .post("tickets", {
       owner_username,
       seating,
