@@ -3,10 +3,11 @@ import React from "react";
 import { Button, StyleSheet, TextInput, View } from "react-native";
 import { getTMEventById, getTMEventsByKeyword } from "../../utils/api";
 
-function SearchTMEvents({ setTmEvents }) {
-  const [searchQuery, setSearchQuery] = React.useState("");
+function SearchTMEvents({ setTmEvents, setHasPostedEvent, setSearchQuery, searchQuery }) {
+
 
   const searchTM = () => {
+    setHasPostedEvent(false); //Allows user to search again after posting than once so we don't need a reset button
     const eventArr = [];
     getTMEventsByKeyword(searchQuery).then((events) => {
       events.map((event) => {
@@ -21,10 +22,11 @@ function SearchTMEvents({ setTmEvents }) {
           return eventArr;
         });
       });
-
       setTmEvents(eventArr);
     });
   };
+
+  // const resetSearch = () => {};
 
   return (
     <View style={styles.searchSectionWrapper}>
@@ -37,6 +39,7 @@ function SearchTMEvents({ setTmEvents }) {
       </View>
       <View style={[{ width: "30%", margin: 5, alignSelf: "center" }]}>
         <Button title="Search" color="#f194ff" onPress={searchTM} />
+        {/* <Button title="Reset" color="#ff94a2" onPress={resetSearch} /> */}
       </View>
     </View>
   );
