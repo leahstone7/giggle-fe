@@ -1,7 +1,7 @@
 import { getAllEvents } from "@/utils/api";
 import formatEventDate from "@/utils/dateUtils";
 import { Ionicons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import React, { useCallback, useEffect, useState } from "react";
 import {
   FlatList,
@@ -12,8 +12,9 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import FilterBtn from "../components/(drawer)/filter";
+import SortBy from "../components/(drawer)/sortBy";
 import Loader from "../components/loader";
-import { Link } from "expo-router";
 
 type Event = {
   _id: string;
@@ -41,6 +42,10 @@ export default function EventList() {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
 
+  // Sort by
+
+  const [sortOption, setSortOption] = useState<string | null>(null);
+
   const fetchEvents = useCallback((refresh = false) => {
     refresh ? setRefreshing(true) : setLoading(true);
     setError(null);
@@ -49,7 +54,7 @@ export default function EventList() {
       .then((events) => {
         setEvents(events);
         setFilteredEvents(events);
-        console.log(events);
+        
       })
       .catch((error) => {
         setError(error.message || "Uh Oh! An error occured!");
@@ -93,8 +98,31 @@ export default function EventList() {
     };
   }, [searchQuery, events]);
 
+  // Sort events
+
+  const getSortedEvents = (eventsToSort: Event[]) => {
+    if (!sortOption) return eventsToSort;
+
+    return [...eventsToSort].sort((a, b) => {
+      if (sortOption === "date") {
+        return (
+          new Date(a.event_date).getTime() - new Date(b.event_date).getTime()
+        );
+      } else {
+        return a.event_artist.localeCompare(b.event_artist);
+      }
+    });
+  };
+
   const handleRefresh = useCallback(() => {
+    setRefreshing(true);
+
+    setSearchQuery("");
+    setSortOption(null);
+
     fetchEvents(true);
+
+    setRefreshing(false);
   }, [fetchEvents]);
 
   const renderEvent = ({ item }: { item: Event }) => (
@@ -166,9 +194,9 @@ export default function EventList() {
       <View>
         <Text>Couldn't find events?</Text>
         <Link href="/components/SearchTmEvents" asChild>
-        <TouchableOpacity >
-          <Text style={{ color: "green" }}> Search more here</Text>
-        </TouchableOpacity>
+          <TouchableOpacity>
+            <Text style={{ color: "green" }}> Search more here</Text>
+          </TouchableOpacity>
         </Link>
       </View>
     );
@@ -196,8 +224,13 @@ export default function EventList() {
           onChangeText={setSearchQuery}
         />
       </View>
+      <View style={{ flexDirection: "row" }}>
+        <SortBy onSortChange={setSortOption} 
+       />
+        <FilterBtn />
+      </View>
       <FlatList
-        data={filteredEvents}
+        data={getSortedEvents(filteredEvents)}
         renderItem={renderEvent}
         keyExtractor={(item) => item._id}
         showsVerticalScrollIndicator={false}
