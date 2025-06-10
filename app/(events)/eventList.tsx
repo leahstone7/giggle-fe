@@ -1,17 +1,19 @@
 import { getAllEvents } from "@/utils/api";
 import formatEventDate from "@/utils/dateUtils";
 import { Ionicons } from "@expo/vector-icons";
-import React, { useEffect, useState } from "react";
+import { useRouter } from "expo-router";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   FlatList,
   Image,
   RefreshControl,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
-import { ActivityIndicator } from "react-native-paper";
 import Loader from "../components/loader";
+import { Link } from "expo-router";
 
 type Event = {
   _id: string;
@@ -19,54 +21,95 @@ type Event = {
   event_location: string;
   event_venue: string;
   event_date: string;
+  event_img?: string;
 };
 
 export default function EventList() {
+  const router = useRouter();
+
   const [events, setEvents] = useState<Event[]>([]);
+
+  // Loading and Refreshing
   const [loading, setLoading] = useState<boolean>(false);
   const [refreshing, setRefreshing] = useState<boolean>(false);
-  const [page, setPage] = useState<number>(1);
-  const [hasMore, setHasMore] = useState<boolean>(true);
-  const [error, setError] = useState<boolean>(false);
 
-  const fetchEvents = (pageNum = 1, refresh = false) => {
-    if (refresh) setRefreshing(true);
-    else if (pageNum === 1) setLoading(true);
+  // Error handling
+  const [error, setError] = useState(null);
+
+  // Search functionality
+
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
+
+  const fetchEvents = useCallback((refresh = false) => {
+    refresh ? setRefreshing(true) : setLoading(true);
+    setError(null);
 
     getAllEvents()
       .then((events) => {
         setEvents(events);
-        setPage(pageNum);
+        setFilteredEvents(events);
+        console.log(events);
       })
       .catch((error) => {
-        console.log("Failet to find events", error);
-        setError(true);
+        setError(error.message || "Uh Oh! An error occured!");
       })
       .finally(() => {
-        if (refresh) setRefreshing(false);
-        else setLoading(false);
+        refresh ? setRefreshing(false) : setLoading(false);
       });
-  };
+  }, []);
 
   useEffect(() => {
     fetchEvents();
-  }, []);
+  }, [fetchEvents]);
 
-  const handleLoadMore = () => {
-    if (hasMore && !loading && !refreshing) {
-      fetchEvents(page + 1);
-    }
-  };
+  // Filter events
+
+  useEffect(() => {
+    let timer;
+
+    const filterEvents = () => {
+      if (!searchQuery.trim()) {
+        setFilteredEvents(events);
+        return;
+      }
+
+      const formattedquery = searchQuery.toLowerCase();
+
+      const filteredData = events.filter((event) => {
+        return (
+          event.event_artist.toLowerCase().includes(formattedquery) ||
+          event.event_location.toLowerCase().includes(formattedquery) ||
+          event.event_venue.toLowerCase().includes(formattedquery)
+        );
+      });
+      setFilteredEvents(filteredData);
+    };
+
+    timer = setTimeout(filterEvents, 300);
+
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
+  }, [searchQuery, events]);
+
+  const handleRefresh = useCallback(() => {
+    fetchEvents(true);
+  }, [fetchEvents]);
 
   const renderEvent = ({ item }: { item: Event }) => (
     <View
       style={{
         flexDirection: "row",
-        flex: 1
+        flex: 1,
       }}
     >
       <Image
-        source={require("../assets/images/login-logo.png")}
+        source={
+          item.event_img
+            ? { uri: item.event_img }
+            : require("../assets/images/login-logo.png")
+        }
         style={{
           width: "30%",
           height: "30%",
@@ -97,42 +140,77 @@ export default function EventList() {
             alignItems: "center",
             justifyContent: "center",
             paddingTop: 5,
-            paddingBottom: 12
+            paddingBottom: 12,
           }}
-          onPress={()=> {console.log("Find tickets pressed")}}
+          onPress={() => {
+            console.log("Find tickets pressed");
+          }}
         >
+          <Ionicons
+            name="ticket-outline"
+            size={20}
+            style={{ marginRight: 8 }}
+            color="blue"
+          />
 
-          <Ionicons name="ticket-outline" size={20}  style={{marginRight: 8}} color="blue"/>
-
-          <Text style={{fontSize: 16}}>Find tickets</Text>
+          <Text style={{ fontSize: 16 }}>Find tickets</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
 
-  if (loading) return <Loader size="small" />;
+  const renderEmptyComponent = () => {
+    if (loading) return null;
+
+    return (
+      <View>
+        <Text>Couldn't find events?</Text>
+        <Link href="/components/SearchTmEvents" asChild>
+        <TouchableOpacity >
+          <Text style={{ color: "green" }}> Search more here</Text>
+        </TouchableOpacity>
+        </Link>
+      </View>
+    );
+  };
+
+  if (loading && !refreshing) return <Loader size="small" />;
+  if (error) {
+    return (
+      <View>
+        <Text> Couldn't find the event requested. Search for more events?</Text>
+      </View>
+    );
+  }
 
   return (
     <View>
+      <View style={{ flexDirection: "row" }}>
+        {/* Search bar */}
+        <Ionicons name="search" size={20} />
+        <TextInput
+          placeholder="Search for events..."
+          autoCorrect={false}
+          autoCapitalize="none"
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+        />
+      </View>
       <FlatList
-        data={events}
+        data={filteredEvents}
         renderItem={renderEvent}
         keyExtractor={(item) => item._id}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ padding: 16, paddingBottom: 80 }}
-        onEndReached={handleLoadMore}
-        onEndReachedThreshold={0.1}
         refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={() => fetchEvents(1, true)}
-          />
+          <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
         }
-        ListFooterComponent={
-          loading && page > 1 ? (
-            <ActivityIndicator style={{ marginVertical: 16 }} />
-          ) : null
-        }
+        // ListFooterComponent={
+        //   loading  ? (
+        //     <ActivityIndicator style={{ marginVertical: 16 }} />
+        //   ) : null
+        // }
+        ListEmptyComponent={renderEmptyComponent}
       />
     </View>
   );
