@@ -14,7 +14,7 @@ export default function Index(){
 
             {/* <Link href={"/userprofile"}> Home page</Link> */}
             {/* <Header /> */}
-            <SearchEvents />
+            {/* <SearchEvents /> */}
             {/* Events list scroller  */}
 
             <Link href="/(auth)">Link to login</Link>

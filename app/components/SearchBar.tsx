@@ -1,70 +1,153 @@
+import { getAllEvents } from "@/utils/api";
+import formatEventDate from "@/utils/dateUtils";
 import { Ionicons } from "@expo/vector-icons";
-import React, { useState } from "react";
-import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
-import { Searchbar } from "react-native-paper";
+import React, { useEffect, useState } from "react";
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import Loader from "./loader";
 
+type Event = {
+  _id: string;
+  event_artist: string;
+  event_location: string;
+  event_venue: string;
+  event_date: string;
+};
 
+function SearchEvents() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [eventData, setEventData] = useState<Event[]>([]);
 
-function SearchEvents(  ){
-
-    
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState([])
+  const [searchResults, setSearchResults] = useState<Event[]>([]);
+  const [error, setError] = useState(null);
 
-function handleSearch(){
-  fetch(
-    `https://giggle-api.onrender.com/api/`
-    
-  )
-}
+  useEffect(() => {
+    setIsLoading(true);
+    getAllEvents()
+      .then((events) => {
+        setEventData(events);
+        setSearchResults(events);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message || "Uh Oh! An error occured!");
+        setIsLoading(false);
+      });
+  }, []);
+
+
+
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+
+    if (!query) {
+      setSearchResults(eventData);
+      return;
+    }
+
+    const formattedquery = query.toLowerCase();
+
+    const filteredData = eventData.filter((event) => {
+      return (
+        event.event_artist.toLowerCase().includes(query) ||
+        event.event_location.toLowerCase().includes(query) ||
+        event.event_venue.toLowerCase().includes(query)
+      );
+    });
+    setSearchResults(filteredData);
+  };
+
+  const renderEvent = ({ item }: { item: Event }) => (
+    <View>
+      <Text>{item.event_artist}</Text>
+      <Text>{item.event_venue}</Text>
+      <Text>{item.event_location}</Text>
+      <Text>{formatEventDate(item.event_date)}</Text>
+    </View>
+  );
+  if (isLoading) return <Loader size="small" />;
+
+  if (error) {
+    return (
+      <View>
+        <Text> Couldn't find the event requested. Search for more events?</Text>
+      </View>
+    );
+  }
 
   return (
-    <View style={styles.searchSectionWrapper} >
+    <View>
+      <View style={styles.searchSectionWrapper}>
         <View style={styles.searchBar}>
-            <Ionicons name="search" size={20} style={{marginRight: 5}}/>
-            <TextInput 
+          <Ionicons name="search" size={20} style={{ marginRight: 5 }} />
+          <TextInput
+            placeholder="Search for events ..."
+            autoCorrect={false}
+            autoCapitalize="none"
             value={searchQuery}
-            onChangeText={(e)=> setSearchQuery(e)}
-            placeholder="Search for events ..." 
-            
-            />
+            onChangeText={handleSearch}
+          />
         </View>
-        <View>
-            <TouchableOpacity onPress={()=> {console.log(" filter button pressed")}} style={styles.filterBtn}>
-                <Ionicons name="options" size={30} color={'black'} style={{
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}/>
-            </TouchableOpacity>
-            
-        </View>
-    
+
+        <TouchableOpacity
+          onPress={() => {
+            console.log(" filter button pressed");
+          }}
+          style={styles.filterBtn}
+        >
+          <Ionicons name="options" size={30} color={"black"} />
+        </TouchableOpacity>
+      </View>
+
+      <FlatList
+        data={searchResults}
+        renderItem={renderEvent}
+        keyExtractor={(item) => item._id}
+        contentContainerStyle={{ paddingTop: 16 }}
+      />
     </View>
   );
 }
 export default SearchEvents;
 
-const styles=StyleSheet.create({
-   searchSectionWrapper: {
-    flexDirection: 'row',
-
-
-   },
-   searchBar: {
+const styles = StyleSheet.create({
+  wrapper: {
     flex: 1,
-    flexDirection: 'row',
-    backgroundColor: '#efefef',
+    padding: 16,
+  },
+  searchSectionWrapper: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  searchBar: {
+    flex: 1,
+    flexDirection: "row",
+    backgroundColor: "#efefef",
     padding: 16,
     borderRadius: 10,
-    width: 300
-    
-   },
+    width: 300,
+  },
 
-   filterBtn: {
+  filterBtn: {
     padding: 12,
     borderRadius: 10,
-    backgroundColor: '#efefef',
-    
-
-   }
-})
+    backgroundColor: "#efefef",
+  },
+  // eventTitle: {
+  //   fontWeight: "bold",
+  //   fontSize: 16
+  // },
+  // eventContainer: {
+  //   backgroundColor: '#f5f5f5',
+  //   borderRadius: 8,
+  //   padding: 12,
+  //   marginBottom: 12
+  // }
+});
