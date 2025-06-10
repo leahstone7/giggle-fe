@@ -30,11 +30,11 @@ function SearchTMEvents({ setTmEvents }) {
       <View style={styles.searchBar}>
         <Ionicons name="search" size={20} style={{ marginRight: 5 }} />
         <TextInput
-          placeholder="Search for new events ..."
+          placeholder="Find a new event to add..."
           onChangeText={(e) => setSearchQuery(e)}
         />
       </View>
-      <View>
+      <View style={[{ width: "30%", margin: 5, alignSelf: "center" }]}>
         <Button title="Search" color="#f194ff" onPress={searchTM} />
       </View>
     </View>
@@ -44,20 +44,15 @@ export default SearchTMEvents;
 
 const styles = StyleSheet.create({
   searchSectionWrapper: {
-    flexDirection: "row",
+    flexDirection: "column",
   },
   searchBar: {
     flex: 1,
     flexDirection: "row",
     backgroundColor: "#efefef",
-    padding: 16,
+    padding: 10,
     borderRadius: 10,
     width: 300,
-  },
-
-  filterBtn: {
-    padding: 12,
-    borderRadius: 10,
-    backgroundColor: "#efefef",
+    alignSelf: 'center'
   },
 });
