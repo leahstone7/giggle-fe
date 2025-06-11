@@ -192,7 +192,7 @@ export default function MessagesTab() {
       {/* Error Display */}
       {error && (
         <View style={styles.errorContainer}>
-          <Text style={styles.errorText}>Error {error}</Text>
+          <Text style={styles.errorText}>Messages Error {error}</Text>
           <TouchableOpacity style={styles.retryButton} onPress={fetchChats}>
             <Text style={styles.retryButtonText}>Retry</Text>
           </TouchableOpacity>
