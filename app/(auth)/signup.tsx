@@ -35,6 +35,8 @@ export default function Signup() {
               style={{
                 fontSize: 22,
                 justifyContent: "center",
+                paddingBottom: 12,
+                alignItems: 'center'
               }}
             >
               {" "}
@@ -43,6 +45,9 @@ export default function Signup() {
           </View>
           <View style={styles.formContainer}>
             {/* USERNAME INPUT */}
+            <View>
+              <Text>Username</Text>
+            </View>
             <Ionicons name="person-outline" size={20} />
             <TextInput
               placeholder="John Smith"

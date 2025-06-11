@@ -4,12 +4,15 @@ import {styles} from "../../styles/auth.styles"
 import Header from "../components/Header";
 import SearchEvents from "../components/SearchBar"
 import EventList from "../(events)/eventList";
+import React from "react";
+
 
 
 export default function Index(){
 
 
     return (
+        
         <View >
 
             {/* <Link href={"/userprofile"}> Home page</Link> */}
@@ -17,9 +20,10 @@ export default function Index(){
             {/* <SearchEvents /> */}
             {/* Events list scroller  */}
 
-            <Link href="/(auth)">Link to login</Link>
-            <Link href="/(auth)/signup">Link to signup</Link>
+            {/* <Link href="/(auth)">Link to login</Link>
+            <Link href="/(auth)/signup">Link to signup</Link> */}
             <EventList />
         </View>
+           
     )
 }
