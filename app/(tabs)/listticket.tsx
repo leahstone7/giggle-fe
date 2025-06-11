@@ -1,25 +1,43 @@
 import { getAllEvents, postTicket } from "@/utils/api";
 import formatEventDate from "@/utils/dateUtils";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+
 import { Picker } from "@react-native-picker/picker";
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 function ListTicket() {
   const { eventId } = useLocalSearchParams();
-
-  const [eventData, setEventData] = useState([{ id: 0 }]);
+  const router = useRouter();
+  const [eventData, setEventData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [hasSubmitted, setHasSubmitted] = useState(false);
+  const [postResponse, setPostResponse] = useState("");
+  const [selectedValue, setSelectedValue] = useState(eventId);
 
   useEffect(() => {
-    // setIsLoading(true);
+    setIsLoading(true);
     getAllEvents()
       .then((events) => {
-        setEventData(events);
-        // setIsLoading(false);
+        setEventData(
+          events.sort((a, b) => {
+            return a.event_artist.localeCompare(b.event_artist);
+          })
+        );
+        setIsLoading(false);
       })
       .catch((err) => {
-        // setError(err.message || "Uh Oh! An error occured!");
-        // setIsLoading(false);
+        setError(err.message || "Uh Oh! An error occured!");
+        setIsLoading(false);
       });
   }, []);
 
@@ -30,10 +48,6 @@ function ListTicket() {
     notes: "",
     hasBeenClaimed: false,
   });
-
-  const [hasSubmitted, setHasSubmitted] = useState(false);
-
-  const [postResponse, setPostResponse] = useState("");
 
   function handleChange(key, value) {
     setTicketToAdd((prev) => ({ ...prev, [key]: value }));
@@ -53,9 +67,11 @@ function ListTicket() {
       });
   }
 
-  //if comes from event page, use search params
-  //otherwise, get event from our database and set eventId that way?
-  //have a link to adding an event if you can't see it
+  function handlePressNewEventLink() {
+    router.push({
+      pathname: "/newEvent",
+    });
+  }
 
   return (
     <View style={styles.container}>
@@ -66,27 +82,33 @@ function ListTicket() {
       ) : (
         <View>
           <Text style={styles.title}>Your event </Text>
-          <Picker
-            onValueChange={(value) => {
-              handleChange("eventDetails", value);
-            }}
-          >
-            {eventData.map((event) => {
-              return (
-                <Picker.Item
-                  key={event._id}
-                  label={
-                    event.event_artist +
-                    ", " +
-                    event.event_location +
-                    " on " +
-                    formatEventDate(event.event_date)
-                  }
-                  value={event._id}
-                />
-              );
-            })}
-          </Picker>
+          {isLoading ? (
+            <Text>Loading events...</Text>
+          ) : (
+            <Picker
+              selectedValue={selectedValue}
+              onValueChange={(value) => {
+                setSelectedValue(value);
+                handleChange("eventDetails", value);
+              }}
+            >
+              {eventData.map((event) => {
+                return (
+                  <Picker.Item
+                    key={event._id}
+                    label={
+                      formatEventDate(event.event_date) +
+                      ": " +
+                      event.event_artist +
+                      ", " +
+                      event.event_location
+                    }
+                    value={event._id}
+                  />
+                );
+              })}
+            </Picker>
+          )}
           <Text style={styles.title}>Select seating type</Text>
           <Picker
             onValueChange={(value) => {
@@ -102,7 +124,27 @@ function ListTicket() {
             value={ticketToAdd.notes}
             onChangeText={(text) => handleChange("notes", text)}
           />
-          <Button title="Upload ticket" onPress={handleSubmit} />
+          <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+            <MaterialIcons
+              name="switch-access-shortcut-add"
+              size={24}
+              color="black"
+            />
+            <Text style={styles.buttonText}>Upload ticket</Text>
+          </TouchableOpacity>
+
+          <View style={styles.bottomPage}>
+            <TouchableOpacity
+              style={styles.buttonAddEvent}
+              onPress={handlePressNewEventLink}
+            >
+              <MaterialCommunityIcons name="reminder" size={24} color="black" />
+              <Text style={styles.buttonText}>
+                {" "}
+                Can't find your event? Add it to Giggle!
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       )}
     </View>
@@ -115,10 +157,12 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: "#f5f5f5",
     flexGrow: 1,
+    flexDirection: "column",
   },
   title: {
     fontSize: 15,
     padding: 5,
+    fontWeight: "bold",
   },
   input: {
     borderWidth: 1,
@@ -130,6 +174,33 @@ const styles = StyleSheet.create({
     flexShrink: 1,
     wordWrap: "wrap",
     width: "auto",
+  },
+  button: {
+    backgroundColor: "#ADC178",
+    paddingVertical: 8,
+    paddingHorizontal: 15,
+    marginTop: 10,
+    alignItems: "center",
+    alignSelf: "center",
+    width: "80%",
+    borderRadius: 15,
+  },
+  buttonText: {
+    fontSize: 15,
+    // fontWeight: "500",
+  },
+  buttonAddEvent: {
+    backgroundColor: "#f194ff",
+    paddingVertical: 8,
+    paddingHorizontal: 15,
+    marginTop: 20,
+    alignItems: "center",
+    alignSelf: "center",
+    width: "80%",
+    borderRadius: 15,
+  },
+  bottomPage: {
+    justifyContent: "flex-end",
   },
 });
 
