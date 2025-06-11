@@ -1,98 +1,136 @@
- import React, {useState} from "react"
- import {
-   StyleSheet,
-   Text,
-   TextInput,
-   View,
-   Button
- } from "react-native";
-import { Picker } from "@react-native-picker/picker"
-import { postTicket } from "@/utils/api";
+import { getAllEvents, postTicket } from "@/utils/api";
+import formatEventDate from "@/utils/dateUtils";
+import { Picker } from "@react-native-picker/picker";
 import { useLocalSearchParams } from "expo-router";
+import React, { useEffect, useState } from "react";
+import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 
- function ListTicket(){
-    const { eventId } = useLocalSearchParams()
+function ListTicket() {
+  const { eventId } = useLocalSearchParams();
 
-    const [ticketToAdd, setTicketToAdd] = useState({
-        owner_username: "tester99",
-        seating: "Seating",
-        eventDetails: "6841ade2e789d40979e235ca",
-        notes: "",
-        hasBeenClaimed: false
-    })
+  const [eventData, setEventData] = useState([{ id: 0 }]);
 
-    const [hasSubmitted, setHasSubmitted] = useState(false)
+  useEffect(() => {
+    // setIsLoading(true);
+    getAllEvents()
+      .then((events) => {
+        setEventData(events);
+        // setIsLoading(false);
+      })
+      .catch((err) => {
+        // setError(err.message || "Uh Oh! An error occured!");
+        // setIsLoading(false);
+      });
+  }, []);
 
-    const [postResponse, setPostResponse] = useState("")
+  const [ticketToAdd, setTicketToAdd] = useState({
+    owner_username: "tester99",
+    seating: "Seating",
+    eventDetails: "6841ade2e789d40979e235ca",
+    notes: "",
+    hasBeenClaimed: false,
+  });
 
-    function handleChange(key, value){
-        setTicketToAdd((prev) => ({...prev, [key]: value}))
-        console.log("Value changed")
-    }
+  const [hasSubmitted, setHasSubmitted] = useState(false);
 
-    function handleSubmit(){
-        setHasSubmitted(true)
-        console.log(ticketToAdd, "<<<")
-        postTicket(ticketToAdd)
-        .then((ticket) => {
-            setPostResponse("Your ticket has been listed")
-        })
-        .catch(() => {
-            setPostResponse("Sorry something went wrong, please try list ticket again")
-        })
-    }
+  const [postResponse, setPostResponse] = useState("");
 
-    return (
-        <View style={styles.container}>
-        {hasSubmitted ? (
-            <>
-            <Text>{`${postResponse}`}</Text>
-            </>
-             ) : (
+  function handleChange(key, value) {
+    setTicketToAdd((prev) => ({ ...prev, [key]: value }));
+  }
 
+  function handleSubmit() {
+    setHasSubmitted(true);
+
+    postTicket(ticketToAdd)
+      .then((ticket) => {
+        setPostResponse("Your ticket has been listed");
+      })
+      .catch(() => {
+        setPostResponse(
+          "Sorry something went wrong, please try list ticket again"
+        );
+      });
+  }
+
+  //if comes from event page, use search params
+  //otherwise, get event from our database and set eventId that way?
+  //have a link to adding an event if you can't see it
+
+  return (
+    <View style={styles.container}>
+      {hasSubmitted ? (
+        <>
+          <Text>{`${postResponse}`}</Text>
+        </>
+      ) : (
         <View>
-            <Text style={styles.title}>Select seating type</Text>
-            <Picker onValueChange={(value) => {handleChange("seating", value)}}>
-                <Picker.Item label="Seating" value="Seating"/>
-                <Picker.Item label="Standing" value="Standing"/>
-            </Picker>
-            <Text style={styles.title}>Anything else to add?</Text>
-            <TextInput 
-            style={styles.input} 
+          <Text style={styles.title}>Your event </Text>
+          <Picker
+            onValueChange={(value) => {
+              handleChange("eventDetails", value);
+            }}
+          >
+            {eventData.map((event) => {
+              return (
+                <Picker.Item
+                  key={event._id}
+                  label={
+                    event.event_artist +
+                    ", " +
+                    event.event_location +
+                    " on " +
+                    formatEventDate(event.event_date)
+                  }
+                  value={event._id}
+                />
+              );
+            })}
+          </Picker>
+          <Text style={styles.title}>Select seating type</Text>
+          <Picker
+            onValueChange={(value) => {
+              handleChange("seating", value);
+            }}
+          >
+            <Picker.Item label="Seating" value="Seating" />
+            <Picker.Item label="Standing" value="Standing" />
+          </Picker>
+          <Text style={styles.title}>Anything else to add?</Text>
+          <TextInput
+            style={styles.input}
             value={ticketToAdd.notes}
             onChangeText={(text) => handleChange("notes", text)}
-            />
-           <Button title="Upload ticket" onPress={handleSubmit}/> 
+          />
+          <Button title="Upload ticket" onPress={handleSubmit} />
         </View>
-            )}
-        </View> 
-    )
+      )}
+    </View>
+  );
+}
 
- }
-
- const styles = StyleSheet.create({
-container: {
+const styles = StyleSheet.create({
+  container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "rgb(253, 252, 242)",
+    backgroundColor: "#f5f5f5",
     flexGrow: 1,
-
-},
-title: {
+  },
+  title: {
     fontSize: 15,
     padding: 5,
-},
-input: {
+  },
+  input: {
     borderWidth: 1,
     borderRadius: 10,
     height: 50,
     marginBottom: 10,
     fontSize: 14,
-    flexWrap: 'wrap',
+    flexWrap: "wrap",
     flexShrink: 1,
-    wordWrap: 'wrap',
-    width: 'auto'
-}
- })
+    wordWrap: "wrap",
+    width: "auto",
+  },
+});
 
- export default ListTicket
+export default ListTicket;
