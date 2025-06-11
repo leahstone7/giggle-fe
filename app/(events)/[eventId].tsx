@@ -126,7 +126,7 @@ export default function EventDetails() {
            // ticket lister page profile
            router.push({
             pathname: '/(profiles)/[username]',
-            params: {userId: item.owner_username}
+            params: {username: item.owner_username}
            })
           }}
         >
