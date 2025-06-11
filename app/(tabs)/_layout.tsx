@@ -28,14 +28,14 @@ export default function TabLayout() {
           ),
         }}
       />
-      <Tabs.Screen
+      {/* <Tabs.Screen
         name="wishlist"
         options={{
           tabBarIcon: ({ size, color }) => (
             <AntDesign name="heart" size={size} color="6C584C" />
           ),
         }}
-      />
+      /> */}
       <Tabs.Screen
         name="message"
         options={{
