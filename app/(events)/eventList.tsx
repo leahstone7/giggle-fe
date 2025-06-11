@@ -187,9 +187,7 @@ export default function EventList() {
             paddingTop: 5,
             paddingBottom: 12,
           }}
-          onPress={() => {
-            console.log("Find tickets pressed");
-          }}
+         onPress={() => router.push(`/${item._id}`)}
         >
           <Ionicons
             name="ticket-outline"
