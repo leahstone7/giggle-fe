@@ -110,10 +110,10 @@ const styles = StyleSheet.create({
 
   },
   placeholderStyle: {
-    fontSize: 16,
+    fontSize: 15,
   },
   selectedTextStyle: {
-    fontSize: 16,
+    fontSize: 15,
   },
   iconStyle: {
     width: 20,
