@@ -8,8 +8,11 @@
  } from "react-native";
 import { Picker } from "@react-native-picker/picker"
 import { postTicket } from "@/utils/api";
+import { useLocalSearchParams } from "expo-router";
 
  function ListTicket(){
+    const { eventId } = useLocalSearchParams()
+
     const [ticketToAdd, setTicketToAdd] = useState({
         owner_username: "tester99",
         seating: "Seating",
