@@ -1,12 +1,15 @@
 import { Stack } from "expo-router";
+import React from "react";
 import { Image } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-
+import {UserProvider} from '../context/userContext'
 
 export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1, backgroundColor: "#000" }}>
+        <UserProvider>
+
         <Stack
           screenOptions={{
             headerStyle: {
@@ -19,7 +22,7 @@ export default function RootLayout() {
               />
             )
           }}
-        >
+          >
           {/* <Stack.Screen name="index" options={{ title: "Home" }} />
           <Stack.Screen name="Wishlist" options={{ title: "Wishlist" }} />
           <Stack.Screen name="Messages" options={{ title: "Messages" }} />
@@ -29,6 +32,7 @@ export default function RootLayout() {
           <Stack.Screen name="(auth)" options={{title: "login page"}}/>
 
         </Stack>
+          </UserProvider>
        
       </SafeAreaView>
     </SafeAreaProvider>
