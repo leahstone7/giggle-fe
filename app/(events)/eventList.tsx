@@ -208,7 +208,7 @@ export default function EventList() {
     return (
       <View>
         <Text>Couldn't find events?</Text>
-        <Link href="/components/SearchTmEvents" asChild>
+        <Link href="/newEvent" asChild>
           <TouchableOpacity>
             <Text style={{ color: "green" }}> Search more here</Text>
           </TouchableOpacity>
