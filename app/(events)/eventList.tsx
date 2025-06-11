@@ -13,6 +13,7 @@ import {
 import { ActivityIndicator } from "react-native-paper";
 import Loader from "../components/loader";
 
+
 type Event = {
   _id: string;
   event_artist: string;

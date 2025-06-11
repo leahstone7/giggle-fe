@@ -62,6 +62,18 @@ export const getUserByUserId = (user_id) => {
     });
 };
 
+export const getEventById = (_id) => {
+   return giggleApi
+   .get(`events/${_id}`) 
+   .then(({data: { event }}) => {
+    return event
+   })
+   .catch((err) => {
+   return Promise.reject(err)
+   })
+}
+
+
 export const postTicket = ({
   owner_username,
   seating,
