@@ -1,20 +1,20 @@
 import { getAllEvents } from "@/utils/api";
 import React, { useEffect, useState } from "react";
-import { TouchableOpacity, View, Text } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 
 import { StyleSheet } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 
 interface FilterBtnProps {
-    onLocationChange: (location: string | null) => void;
+  onLocationChange: (location: string | null) => void;
 }
 
 interface EventLocation {
-    value: string;
-    label: string;
+  value: string;
+  label: string;
 }
 
-export default function FilterBtn({onLocationChange} : FilterBtnProps) {
+export default function FilterBtn({ onLocationChange }: FilterBtnProps) {
   const [location, setLocation] = useState<EventLocation[]>([]);
   const [filterValue, setFilterValue] = useState<string | null>(null);
   const [isFocus, setIsFocus] = useState<boolean>(false);
@@ -23,12 +23,17 @@ export default function FilterBtn({onLocationChange} : FilterBtnProps) {
     getAllEvents()
       .then((events) => {
         const count = Object.keys(events).length;
-        let locationArray : EventLocation[]= [];
+        let locationArray: EventLocation[] = [];
+        const uniqueVlaues = new Set<string>();
         for (let i = 0; i < count; i++) {
-          locationArray.push({
-            value: events[i].event_location,
-            label: events[i].event_location,
-          });
+          const location = events[i].event_location;
+          if (!uniqueVlaues.has(location)) {
+            uniqueVlaues.add(location);
+            locationArray.push({
+              value: location,
+              label: location,
+            });
+          }
         }
         setLocation(locationArray);
       })
@@ -50,7 +55,6 @@ export default function FilterBtn({onLocationChange} : FilterBtnProps) {
         labelField="label"
         valueField="value"
         placeholder={!isFocus ? "Filter by location" : "..."}
-    
         value={filterValue}
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}
@@ -59,21 +63,18 @@ export default function FilterBtn({onLocationChange} : FilterBtnProps) {
           setIsFocus(false);
           onLocationChange(item.value);
         }}
-       
       />
-       {filterValue && (
-            <TouchableOpacity
-            onPress={()=> {
-                setFilterValue(null);
-                onLocationChange(null)
-            }}
-            style={styles.clearButton}
-            >
-                <Text style={styles.clearBtnText}>Clear</Text>
-            </TouchableOpacity>
-        )
-
-        }
+      {filterValue && (
+        <TouchableOpacity
+          onPress={() => {
+            setFilterValue(null);
+            onLocationChange(null);
+          }}
+          style={styles.clearButton}
+        >
+          <Text style={styles.clearBtnText}>Clear</Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 }
@@ -122,12 +123,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   clearButton: {
-    position: 'absolute',
+    position: "absolute",
     right: 10,
     top: 10,
     zIndex: 1,
   },
   clearBtnText: {
-    color: "#979897"
-  }
+    color: "#979897",
+  },
 });
