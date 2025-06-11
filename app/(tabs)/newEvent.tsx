@@ -63,7 +63,7 @@ export default function newEvent() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
+     backgroundColor: '#f5f5f5',
     padding: 10,
     paddingBottom: 60,
   },
