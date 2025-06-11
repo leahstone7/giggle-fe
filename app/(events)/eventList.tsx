@@ -16,6 +16,7 @@ import FilterBtn from "../components/(drawer)/filter";
 import SortBy from "../components/(drawer)/sortBy";
 import Loader from "../components/loader";
 
+
 type Event = {
   _id: string;
   event_artist: string;
