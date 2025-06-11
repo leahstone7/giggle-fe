@@ -12,7 +12,8 @@ import {
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 
-export interface IUser {
+
+interface IUser {
   _id: string;
   firstName: string;
   lastName: string;
@@ -35,6 +36,7 @@ export interface IUser {
   memberSince: string;
   interestedEvents: string[];
   profilePictureURL: string;
+
 }
 
 function UserProfile() {

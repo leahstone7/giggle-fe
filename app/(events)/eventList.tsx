@@ -16,6 +16,7 @@ import FilterBtn from "../components/(drawer)/filter";
 import SortBy from "../components/(drawer)/sortBy";
 import Loader from "../components/loader";
 
+
 type Event = {
   _id: string;
   event_artist: string;
@@ -186,9 +187,7 @@ export default function EventList() {
             paddingTop: 5,
             paddingBottom: 12,
           }}
-          onPress={() => {
-            console.log("Find tickets pressed");
-          }}
+         onPress={() => router.push(`/${item._id}`)}
         >
           <Ionicons
             name="ticket-outline"
