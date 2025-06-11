@@ -228,15 +228,24 @@ export default function EventList() {
 
   return (
     <View>
-      <View style={{ flexDirection: "row" }}>
+      <View style={{ 
+        flexDirection: "row", 
+        borderWidth: 1,
+        borderRadius: 6,
+        borderColor: '#ccc',
+        padding: 6
+
+      }}>
         {/* Search bar */}
-        <Ionicons name="search" size={20} />
+        <Ionicons name="search" size={20} 
+       />
         <TextInput
           placeholder="Search for events..."
           autoCorrect={false}
           autoCapitalize="none"
           value={searchQuery}
           onChangeText={setSearchQuery}
+      
         />
       </View>
       <View style={{ display: "flex" ,
@@ -252,7 +261,7 @@ export default function EventList() {
         renderItem={renderEvent}
         keyExtractor={(item) => item._id}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ padding: 16, paddingBottom: 80 }}
+        contentContainerStyle={{ padding: 16, paddingBottom: "70%" }}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
         }
