@@ -192,13 +192,13 @@ export default function EventDetails() {
       resizeMode="cover"
       style={styles.image}
       />
+      <View style={styles.textContainer}>
         <Text style={styles.artist}>{event.event_artist}</Text>
         <Text style={styles.venue}>Playing: {event.event_venue}, {event.event_location}</Text>
-        <Text style={styles.date} >At: {formattedDate}, {formattedTime}</Text>
+        <Text style={styles.date} >{formattedDate}, {formattedTime}</Text>
+      </View>
         <View style={styles.buttonContainer}>
-          {/* <Button title="View Available Tickets" onPress={handleViewTickets} style={styles.button}/>
-
-          <Button title="List Your Spare Ticket" onPress={handleListTicket} style={styles.button}/> */}
+      
           <TouchableOpacity style={styles.button} onPress={handleViewTickets}> <Text style={styles.buttonText}>View Available Tickets</Text></TouchableOpacity>
 
           <TouchableOpacity style={styles.button} onPress={handleListTicket}> <Text style={styles.buttonText}>List Your Spare Ticket</Text></TouchableOpacity>
@@ -331,7 +331,12 @@ image: {
 container: {
 flex: 1,
 alignItems: 'center',
-padding: 15
+padding: 15,
+},
+textContainer: {
+flex: 1,
+alignItems: 'center',
+padding: 15,
 },
 artist: {
 fontWeight: 'bold',
