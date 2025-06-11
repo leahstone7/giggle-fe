@@ -1,3 +1,4 @@
+import { styles } from "@/styles/eventList.styles";
 import { getAllEvents } from "@/utils/api";
 import formatEventDate from "@/utils/dateUtils";
 import { Ionicons } from "@expo/vector-icons";
@@ -15,7 +16,6 @@ import {
 import FilterBtn from "../components/(drawer)/filter";
 import SortBy from "../components/(drawer)/sortBy";
 import Loader from "../components/loader";
-
 
 type Event = {
   _id: string;
@@ -49,7 +49,7 @@ export default function EventList() {
 
   // Filter by location
 
-  const [locationFilter, setLocationFilter] = useState<string | null> (null);
+  const [locationFilter, setLocationFilter] = useState<string | null>(null);
 
   const fetchEvents = useCallback((refresh = false) => {
     refresh ? setRefreshing(true) : setLoading(true);
@@ -59,7 +59,6 @@ export default function EventList() {
       .then((events) => {
         setEvents(events);
         setFilteredEvents(events);
-        
       })
       .catch((error) => {
         setError(error.message || "Uh Oh! An error occured!");
@@ -87,16 +86,16 @@ export default function EventList() {
       const formattedquery = searchQuery.toLowerCase();
 
       const filteredData = events.filter((event) => {
-       
-        const matchesSearch = searchQuery.trim() === '' ||
+        const matchesSearch =
+          searchQuery.trim() === "" ||
           event.event_artist.toLowerCase().includes(formattedquery) ||
           event.event_location.toLowerCase().includes(formattedquery) ||
-          event.event_venue.toLowerCase().includes(formattedquery)
-        
-          const matchesLocation = !locationFilter || event.event_location === locationFilter;
+          event.event_venue.toLowerCase().includes(formattedquery);
 
-          return matchesSearch && matchesLocation;
-          
+        const matchesLocation =
+          !locationFilter || event.event_location === locationFilter;
+
+        return matchesSearch && matchesLocation;
       });
       setFilteredEvents(filteredData);
     };
@@ -128,8 +127,7 @@ export default function EventList() {
 
   const filterByLocation = (location: string | null) => {
     setLocationFilter(location);
-  }
-  
+  };
 
   const handleRefresh = useCallback(() => {
     setRefreshing(true);
@@ -143,60 +141,37 @@ export default function EventList() {
   }, [fetchEvents]);
 
   const renderEvent = ({ item }: { item: Event }) => (
-    <View
-      style={{
-        flexDirection: "row",
-        flex: 1,
-      }}
-    >
+    <View style={styles.card}>
       <Image
         source={
           item.event_img
             ? { uri: item.event_img }
             : require("../assets/images/login-logo.png")
         }
-        style={{
-          width: "30%",
-          height: "30%",
-          aspectRatio: 1,
-          resizeMode: "contain",
-        }}
+        style={styles.image}
       />
-      <View
-        style={{
-          paddingTop: 16,
-          paddingLeft: 20,
-        }}
-      >
-        <Text
-          style={{
-            fontWeight: "bold",
-          }}
-        >
-          {item.event_artist}
-        </Text>
-        <Text>{item.event_venue}.</Text>
-        <Text>{item.event_location}.</Text>
-        <Text>{formatEventDate(item.event_date)}</Text>
+      <View style={styles.contentContainer}>
+        <View>
+          <Text style={styles.artistName}>{item.event_artist}</Text>
+          <Text style={styles.venueText}>{item.event_venue}.</Text>
+          <Text style={styles.locationText}>{item.event_location}.</Text>
+          <Text style={styles.dateText}>
+            {formatEventDate(item.event_date)}
+          </Text>
+        </View>
 
         <TouchableOpacity
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "center",
-            paddingTop: 5,
-            paddingBottom: 12,
-          }}
-         onPress={() => router.push(`/${item._id}`)}
+          style={styles.ticketBtn}
+          onPress={() => router.push(`/${item._id}`)}
         >
           <Ionicons
             name="ticket-outline"
             size={20}
             style={{ marginRight: 8 }}
-            color="blue"
+            color="#0066cc"
           />
 
-          <Text style={{ fontSize: 16 }}>Find tickets</Text>
+          <Text style={styles.ticketText}>Find tickets</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -228,32 +203,29 @@ export default function EventList() {
 
   return (
     <View>
-      <View style={{ 
-        flexDirection: "row", 
-        borderWidth: 1,
-        borderRadius: 6,
-        borderColor: '#ccc',
-        padding: 6
-
-      }}>
+      <View style={styles.searchContainer}>
         {/* Search bar */}
-        <Ionicons name="search" size={20} 
-       />
+        <Ionicons name="search" size={20} styles={styles.searchIcon} />
         <TextInput
+        style={styles.searchInput}
           placeholder="Search for events..."
           autoCorrect={false}
           autoCapitalize="none"
           value={searchQuery}
           onChangeText={setSearchQuery}
-      
         />
+        {searchQuery && (
+          <TouchableOpacity
+          onPress={()=>{
+            setSearchQuery("");
+          }}
+          style={styles.clearBtn}
+          ><Text style={styles.clearBtnText}>Clear</Text>
+          </TouchableOpacity>
+        )}
       </View>
-      <View style={{ display: "flex" ,
-        flexDirection: 'row',
-      
-      }}>
-        <SortBy onSortChange={setSortOption} 
-       />
+      <View style={{ display: "flex", flexDirection: "row" }}>
+        <SortBy onSortChange={setSortOption} />
         <FilterBtn onLocationChange={filterByLocation} />
       </View>
       <FlatList
@@ -265,11 +237,7 @@ export default function EventList() {
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
         }
-        // ListFooterComponent={
-        //   loading  ? (
-        //     <ActivityIndicator style={{ marginVertical: 16 }} />
-        //   ) : null
-        // }
+        
         ListEmptyComponent={renderEmptyComponent}
       />
     </View>
