@@ -61,9 +61,5 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     width: 300,
     alignSelf: "center",
-    // borderColor: "white",
-    // borderStyle: "solid",
-    // borderWidth: 1,
-
   },
 });
