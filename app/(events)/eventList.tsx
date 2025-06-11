@@ -188,6 +188,7 @@ export default function EventList() {
             paddingBottom: 12,
           }}
           onPress={() => {
+           router.push(`/${item._id}`)
             console.log("Find tickets pressed");
           }}
         >
