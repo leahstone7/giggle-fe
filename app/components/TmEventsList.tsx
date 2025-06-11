@@ -1,5 +1,7 @@
 import formatEventDate from "@/utils/dateUtils";
 import Entypo from "@expo/vector-icons/Entypo";
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import React from "react";
 import {
   FlatList,
@@ -55,13 +57,22 @@ function TmEventsList({ tmEvents, setHasPostedEvent }) {
 
   const renderItem = ({ item }) => {
     return (
-      <View>
+      <View style={styles.eventCard}>
         <Text style={styles.artist}>{item.event_artist}</Text>
         <View style={styles.container}>
           <View>
-            <Text style={styles.item}>{item.event_venue}</Text>
-            <Text style={styles.item}>{item.event_location}</Text>
-            <Text style={styles.item}>{formatEventDate(item.event_date)}</Text>
+            <Text style={styles.item}><FontAwesome6 name="building-columns" size={15} color="black" />  {item.event_venue}</Text>
+            <Text style={styles.item}><Entypo name="location-pin" size={15} color="black" />  {item.event_location}</Text>
+            <Text style={styles.item}><MaterialIcons name="event" size={13} color="black" />   {formatEventDate(item.event_date)}</Text>
+            <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            addNewEvent(item);
+          }}
+        >
+          
+          <Text><Entypo name="add-to-list" size={14} color="black" />  Add to Giggle</Text>
+        </TouchableOpacity>
           </View>
           <Image
             style={styles.eventImg}
@@ -70,53 +81,50 @@ function TmEventsList({ tmEvents, setHasPostedEvent }) {
             }}
           ></Image>
         </View>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            addNewEvent(item);
-          }}
-        >
-          <Entypo name="add-to-list" size={16} color="black" />
-          <Text>Add to Giggle </Text>
-
-          {/* <Ionicons name="pluscircle" size={20} style={{marginRight: 5}}/> */}
-        </TouchableOpacity>
+        
       </View>
     );
   };
 
   return (
     <View>
-      <FlatList
-        // horizontal={true}
-        scrollEnabled={false}
-        data={tmEvents}
-        renderItem={renderItem}
-      />
+      <FlatList scrollEnabled={false} data={tmEvents} renderItem={renderItem} />
     </View>
   );
 }
 export default TmEventsList;
 
 const styles = StyleSheet.create({
+  eventCard: {
+    // borderColor: "grey",
+    // borderStyle: "solid",
+    // borderWidth: 1,
+    backgroundColor: 'rgb(240, 234, 210)',
+    marginBlockEnd: 0,
+        marginBlockStart: 20,
+
+  },
   container: {
-    flex: 1, // the number of columns you want to divide the screen into
-    // maxWidth: '50%',
+    flex: 1,
     flexDirection: "row",
-    // marginHorizontal: "auto",
     justifyContent: "space-between",
+
   },
   artist: {
     backgroundColor: "rgb(193, 213, 193)",
     color: "black",
     padding: 10,
-    marginBlockStart: 10,
+    marginBlockEnd: 5,
     fontWeight: "bold",
+     shadowColor: '#000',
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.5,
+  shadowRadius: 2,
+  elevation: 2,
   },
   item: {
-    backgroundColor: "transparent",
     color: "black",
-    padding: 2,
+    padding: 3,
     paddingHorizontal: 14,
     alignItems: "flex-start",
   },
@@ -125,15 +133,24 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     color: "black",
     padding: 10,
-    margin: 10,
-    marginHorizontal: 100,
+    marginBlockStart: 30,
+    marginHorizontal: 20,
+    width: 150,
     alignItems: "center",
-    borderRadius: "1rem",
+    borderRadius: 5,
+     shadowColor: '#000',
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.5,
+  shadowRadius: 2,
+  elevation: 2,
+    
   },
   eventImg: {
-    width: 170,
-    height: 170,
+    width: 150,
+    height: 150,
     resizeMode: "cover",
     alignItems: "flex-end",
+    margin: 5,
+    
   },
 });

@@ -5,8 +5,6 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import SearchTMEvents from "../components/SearchTmEvents";
 import TmEventsList from "../components/TmEventsList";
 
-//NEED TO IMPLEMENT REFRESH - app-wide?
-
 export default function newEvent() {
   const [refreshing, setRefreshing] = React.useState(false);
   const [tmEvents, setTmEvents] = useState([]);
@@ -33,7 +31,7 @@ export default function newEvent() {
           }
         >
           <Text style={styles.title}>
-            Couldn't find the event you were looking for? Add it here!
+            Search for events to add to Giggle
           </Text>
 
           <SearchTMEvents
@@ -65,12 +63,13 @@ const styles = StyleSheet.create({
     flex: 1,
      backgroundColor: '#f5f5f5',
     padding: 10,
-    paddingBottom: 60,
+    paddingBottom: 50,
   },
   title: {
     color: "black",
     padding: 10,
     marginBlockStart: 10,
+    alignSelf: 'center',
     fontWeight: "bold",
   },
 });
