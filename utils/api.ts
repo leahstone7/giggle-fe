@@ -55,6 +55,7 @@ export const getUserByUserId = (user_id) => {
   return giggleApi
     .get(`users/${user_id}`)
     .then(({ data: { user } }) => {
+      console.log(user, "<<<<api")
       return user;
     })
     .catch((err) => {
@@ -106,3 +107,4 @@ export const getTicketsByEventId = (eventId) => {
       return Promise.reject(err);
     });
 };
+

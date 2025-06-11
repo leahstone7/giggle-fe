@@ -123,7 +123,11 @@ export default function EventDetails() {
             item.hasBeenClaimed ? styles.buttonClaimed : styles.buttonUnclaimed,
           ]}
           onPress={() => {
-            //see owner page
+           // ticket lister page profile
+           router.push({
+            pathname: '/(profiles)/[username]',
+            params: {userId: item.owner_username}
+           })
           }}
         >
           {item.hasBeenClaimed ? (
