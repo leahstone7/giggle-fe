@@ -94,7 +94,18 @@ function UserProfile() {
   const [isEditing, setIsEditing] = useState(false);
 
   function handleChange(key, value) {
-    setUser((prev) => ({ ...prev, [key]: value }));
+    if(key === "town"){
+      setUser((prev) => ({
+        ...prev,
+        location: {
+          ...prev.location,
+          town: value
+        }
+      }))
+    } else {
+
+      setUser((prev) => ({ ...prev, [key]: value }))
+    }
   }
 
   return (
@@ -110,7 +121,7 @@ function UserProfile() {
               style={styles.avatar}
               resizeMode="contain"
               source={{
-                uri: user.profilePictureURL,
+                uri: "https://robohash.org/mail@ashallendesign.co.uk",
               }}
             />
             <View style={styles.personalInfo}>
@@ -135,7 +146,7 @@ function UserProfile() {
                   <TextInput
                     style={styles.input}
                     value={user.location.town}
-                    onChangeText={(text) => handleChange("location", text)}
+                    onChangeText={(text) => handleChange("town", text)}
                   />
                   <TextInput
                     style={styles.input}
@@ -246,7 +257,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: "60%",
     padding: 10,
-    backgroundColor: "rgb(44, 131, 44)",
+    backgroundColor: "#ADC178",
     alignItems: "center",
     marginTop: 10,
   },
@@ -257,7 +268,7 @@ const styles = StyleSheet.create({
   personalInfo: {
     alignItems: "center",
     padding: 20,
-    backgroundColor: "rgb(253, 252, 242)",
+    backgroundColor: "#F0EAD2",
     borderRadius: 30,
     width: "80%",
     marginBottom: 10,
@@ -266,7 +277,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 20,
     justifyContent: "center",
-    backgroundColor: "rgb(253, 252, 242)",
+    backgroundColor: "#F0EAD2",
     borderColor: "#228B22",
     borderRadius: 20,
     width: "80%",
