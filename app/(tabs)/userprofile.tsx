@@ -1,4 +1,4 @@
-import { getUserByUserId, patchUser } from "@/utils/api";
+import { getUserByUserId } from "@/utils/api";
 import { useEffect, useState } from "react";
 import {
   Image,
@@ -12,21 +12,31 @@ import {
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 
-interface IUser{
-  _id: string,
-    firstName: string,
-    lastName: string,
-    username: string,
-    location: {town: string, postcode: string},
-    preferences: {drinkPreference: string, seatPreference: string, giggingStyle: {mosher: boolean, singalong: boolean, photographer: boolean}},
-    biography: string,
-    dateOfBirth: string,
-    gender: string,
-    trustRating: number,
-    isVerified: boolean,
-    interestedEvents: Array<"">,
-    profilePictureURL: string,
-    memberSince: string
+
+interface IUser {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  username: string;
+  location: { town: string; postcode: string };
+  preferences: {
+    drinkPreference: string | null ;
+    seatPreference: string;
+    giggingStyle: {
+      mosher: boolean;
+      singalong: boolean;
+      photographer: boolean;
+    };
+  };
+  biography: string;
+  dateOfBirth: string;
+  gender: string;
+  trustRating: number;
+  isVerified: boolean;
+  memberSince: string;
+  interestedEvents: string[];
+  profilePictureURL: string;
+
 }
 
 function UserProfile() {
@@ -35,8 +45,12 @@ function UserProfile() {
     firstName: "",
     lastName: "",
     username: "",
-    location: {town: "", postcode: ""},
-    preferences: {drinkPreference: "", seatPreference: "", giggingStyle: {mosher: false, singalong: false, photographer: false}},
+    location: { town: "", postcode: "" },
+    preferences: {
+      drinkPreference: "",
+      seatPreference: "",
+      giggingStyle: { mosher: false, singalong: false, photographer: false },
+    },
     biography: "",
     dateOfBirth: "2000-01-01",
     gender: "",
@@ -44,40 +58,41 @@ function UserProfile() {
     isVerified: false,
     interestedEvents: [],
     profilePictureURL: "",
-    memberSince: "2025-05-25"
-  })
+    memberSince: "2025-05-25",
+  });
 
-
-  const formatBirthYear = (dateOfBirth) => {
-    return new Date(dateOfBirth).getFullYear().toString()
+ 
+  const formatBirthYear = (dateOfBirth: string) => {
+    return new Date(dateOfBirth).getFullYear().toString();
   };
 
-  const formatMemberSince = (memberSince) => {
-    const day = new Date(memberSince).getDate().toString()
-    const month = new Date(memberSince).getMonth().toString()
-    const year = new Date(memberSince).getFullYear().toString()
-    return `${day}/${month}/${year}`
-    }
+  const formatMemberSince = (memberSince: string) => {
+    const day = new Date(memberSince).getDate().toString();
+    const month = new Date(memberSince).getMonth().toString();
+    const year = new Date(memberSince).getFullYear().toString();
+    return `${day}/${month}/${year}`;
+  };
 
-  let trustPercentage = 100
+  let trustPercentage = 100;
 
-  const trueFalse = (value) => (value ? "Yes" : "No");
+  const trueFalse = (value: string) => (value ? "Yes" : "No");
 
   useEffect(() => {
-   getUserByUserId("6841b8a92dc3ed702a69d6b1")
-   .then((user) => {
-    setUser(user)
-    trustPercentage = user.trustRating * 100;
-    const newBirthYear = formatBirthYear(user.dateOfBirth)
-    const newMemberDate = formatMemberSince(user.memberSince)
-    setUser({...user, dateOfBirth: newBirthYear, memberSince: newMemberDate})
-
-    
-   })
-  }, [])
+    getUserByUserId("6841b8a92dc3ed702a69d6b1").then((user) => {
+      setUser(user);
+      trustPercentage = user.trustRating * 100;
+      const newBirthYear = formatBirthYear(user.dateOfBirth);
+      const newMemberDate = formatMemberSince(user.memberSince);
+      setUser({
+        ...user,
+        dateOfBirth: newBirthYear,
+        memberSince: newMemberDate,
+      });
+    });
+  }, []);
 
   const [isEditing, setIsEditing] = useState(false);
-  
+
   function handleChange(key, value) {
     setUser((prev) => ({ ...prev, [key]: value }));
   }
@@ -132,7 +147,7 @@ function UserProfile() {
                     value={user.gender}
                     onChangeText={(text) => handleChange("gender", text)}
                   />
-                  <TextInput 
+                  <TextInput
                     style={styles.input}
                     value={user.biography}
                     onChangeText={(text) => handleChange("biography", text)}
@@ -153,8 +168,10 @@ function UserProfile() {
                   <Text style={styles.text}>{user.location.town}</Text>
                   <Text style={styles.text}>Born: {user.dateOfBirth}</Text>
                   <Text style={styles.text}>Gender: {user.gender}</Text>
-                  <Text style={styles.text}>Member since: {user.memberSince}</Text>
-                   <Text style={styles.text}>{user.biography}</Text>
+                  <Text style={styles.text}>
+                    Member since: {user.memberSince}
+                  </Text>
+                  <Text style={styles.text}>{user.biography}</Text>
                   <TouchableOpacity
                     onPress={() => setIsEditing(true)}
                     style={styles.button}
@@ -180,11 +197,10 @@ function UserProfile() {
                 Singalong: {trueFalse(user.preferences.giggingStyle.singalong)}
               </Text>
               <Text style={styles.text}>
-                Photographer: {trueFalse(user.preferences.giggingStyle.photographer)}
+                Photographer:{" "}
+                {trueFalse(user.preferences.giggingStyle.photographer)}
               </Text>
-              <Text style={styles.text}>
-                Trust Rating: {trustPercentage}%⋆
-              </Text>
+              <Text style={styles.text}>Trust Rating: {trustPercentage}%⋆</Text>
             </View>
           </View>
         </ScrollView>
@@ -265,4 +281,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UserProfile
+export default UserProfile;
