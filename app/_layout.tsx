@@ -17,8 +17,13 @@ export default function RootLayout() {
             },
             headerTitle: "",
             headerLeft: ()=> (
-              <Image source={require('../app/assets/images/giggle-logo.png')} 
-              style={{width: 100, height: 40, borderRadius: 10, alignItems: 'center', position: 'absolute'}}
+              <Image source={require('../app/assets/images/giggle-text-transparent.png')} 
+              style={{width: 120, height: 60, borderRadius: 0, resizeMode: 'contain'}}
+              />
+            ),
+            headerRight: ()=> (
+              <Image source={require('../app/assets/images/giggle-lilguy-transparent.png')} 
+              style={{width: 120, height: 80, borderRadius: 0, resizeMode: 'contain'}}
               />
             )
           }}
