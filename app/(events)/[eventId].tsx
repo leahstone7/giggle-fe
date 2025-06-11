@@ -1,5 +1,5 @@
 
-import { View, Text, Image, ScrollView, Button, StyleSheet } from 'react-native'
+import { View, Text, Image, ScrollView, TouchableOpacity, StyleSheet } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import { getEventById } from '@/utils/api'
@@ -80,8 +80,12 @@ export default function EventDetails() {
         <Text style={styles.venue}>Playing: {event.event_venue}, {event.event_location}</Text>
         <Text style={styles.date} >At: {formattedDate}, {formattedTime}</Text>
         <View style={styles.buttonContainer}>
-          <Button title="View Available Tickets" onPress={handleViewTickets} style={styles.button}/>
-          <Button title="List Your Spare Ticket" onPress={handleListTicket} style={styles.button}/>
+          {/* <Button title="View Available Tickets" onPress={handleViewTickets} style={styles.button}/>
+
+          <Button title="List Your Spare Ticket" onPress={handleListTicket} style={styles.button}/> */}
+          <TouchableOpacity style={styles.button} onPress={handleViewTickets}> <Text style={styles.buttonText}>View Available Tickets</Text></TouchableOpacity>
+
+          <TouchableOpacity style={styles.button} onPress={handleListTicket}> <Text style={styles.buttonText}>List Your Spare Ticket</Text></TouchableOpacity>
         </View>
         </View>
     </ScrollView>
@@ -118,7 +122,15 @@ justifyContent: 'space-between',
 padding: 8,
 },
 button: {
-  marginBottom: 6,
-  color: "rgb(44, 131, 44)"
-}
+  backgroundColor:"#DDE5B6",
+  paddingVertical: 12,
+  paddingHorizontal: 20,
+  marginTop: 10,
+  alignItems: "center",
+},
+
+buttonText: {
+  fontSize: 16,
+  fontWeight: "500",
+},
 })
