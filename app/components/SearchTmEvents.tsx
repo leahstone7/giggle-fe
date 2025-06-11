@@ -3,9 +3,12 @@ import React from "react";
 import { Button, StyleSheet, TextInput, View } from "react-native";
 import { getTMEventById, getTMEventsByKeyword } from "../../utils/api";
 
-function SearchTMEvents({ setTmEvents, setHasPostedEvent, setSearchQuery, searchQuery }) {
-
-
+function SearchTMEvents({
+  setTmEvents,
+  setHasPostedEvent,
+  setSearchQuery,
+  searchQuery,
+}) {
   const searchTM = () => {
     setHasPostedEvent(false); //Allows user to search again after posting than once so we don't need a reset button
     const eventArr = [];
@@ -53,10 +56,14 @@ const styles = StyleSheet.create({
   searchBar: {
     flex: 1,
     flexDirection: "row",
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#f0f0f0",
     padding: 10,
-    borderRadius: 10,
+    borderRadius: 12,
     width: 300,
     alignSelf: "center",
+    // borderColor: "white",
+    // borderStyle: "solid",
+    // borderWidth: 1,
+
   },
 });
