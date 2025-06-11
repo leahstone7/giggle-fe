@@ -100,7 +100,7 @@ export default TmEventsList;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, // the number of columns you want to devide the screen into
+    flex: 1, // the number of columns you want to divide the screen into
     // maxWidth: '50%',
     flexDirection: "row",
     // marginHorizontal: "auto",

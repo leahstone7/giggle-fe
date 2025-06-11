@@ -63,16 +63,15 @@ export const getUserByUserId = (user_id) => {
 };
 
 export const getEventById = (_id) => {
-   return giggleApi
-   .get(`events/${_id}`) 
-   .then(({data: { event }}) => {
-    return event
-   })
-   .catch((err) => {
-   return Promise.reject(err)
-   })
-}
-
+  return giggleApi
+    .get(`events/${_id}`)
+    .then(({ data: { event } }) => {
+      return event;
+    })
+    .catch((err) => {
+      return Promise.reject(err);
+    });
+};
 
 export const postTicket = ({
   owner_username,
@@ -91,6 +90,17 @@ export const postTicket = ({
     })
     .then(({ data: { ticket } }) => {
       return ticket;
+    })
+    .catch((err) => {
+      return Promise.reject(err);
+    });
+};
+
+export const getTicketsByEventId = (eventId) => {
+  return giggleApi
+    .get(`tickets/events/${eventId}`)
+    .then(({ data: { tickets } }) => {
+      return tickets;
     })
     .catch((err) => {
       return Promise.reject(err);
