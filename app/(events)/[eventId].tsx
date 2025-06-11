@@ -7,7 +7,6 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
-  Button,
   FlatList,
   Image,
   ScrollView,
@@ -25,16 +24,15 @@ export default function EventDetails() {
   const [availableTickets, setAvailableTickets] = useState([]);
   const [wantsToViewTickets, setWantsToViewTickets] = useState(false);
 
-        
-  const router = useRouter()
-  
+  const router = useRouter();
+
   type Event = {
-    _id: string
-    event_artist: string
-    event_location: string
-    event_venue: string
-    event_date: string
-    event_img: string
+    _id: string;
+    event_artist: string;
+    event_location: string;
+    event_venue: string;
+    event_date: string;
+    event_img: string;
   };
 
   function handleViewTickets() {
@@ -95,11 +93,19 @@ export default function EventDetails() {
                 item.hasBeenClaimed ? styles.itemClaimed : styles.itemUnclaimed,
               ]}
             >
-              <MaterialCommunityIcons
-                name="ticket-account"
-                size={18}
-                color="black"
-              />
+              {item.hasBeenClaimed ? (
+                <MaterialCommunityIcons
+                  name="ticket-account"
+                  size={18}
+                  color="grey"
+                />
+              ) : (
+                <MaterialCommunityIcons
+                  name="ticket-account"
+                  size={18}
+                  color="black"
+                />
+              )}
               {"  Ticket donated by: "}
               {item.owner_username}
             </Text>
@@ -111,9 +117,17 @@ export default function EventDetails() {
                     : styles.itemUnclaimed,
                 ]}
               >
-                <FontAwesome name="quote-left" size={18} color="black" />{" "}
+                {item.hasBeenClaimed ? (
+                  <FontAwesome name="quote-left" size={18} color="grey" />
+                ) : (
+                  <FontAwesome name="quote-left" size={18} color="black" />
+                )}{" "}
                 {item.notes}{" "}
-                <FontAwesome name="quote-right" size={18} color="black" />
+                {item.hasBeenClaimed ? (
+                  <FontAwesome name="quote-right" size={18} color="grey" />
+                ) : (
+                  <FontAwesome name="quote-right" size={18} color="black" />
+                )}
               </Text>
             ) : null}
           </View>
@@ -123,11 +137,11 @@ export default function EventDetails() {
             item.hasBeenClaimed ? styles.buttonClaimed : styles.buttonUnclaimed,
           ]}
           onPress={() => {
-           // ticket lister page profile
-           router.push({
-            pathname: '/(profiles)/[username]',
-            params: {username: item.owner_username}
-           })
+            // ticket lister page profile
+            router.push({
+              pathname: "/(profiles)/[username]",
+              params: { username: item.owner_username },
+            });
           }}
         >
           {item.hasBeenClaimed ? (
@@ -142,67 +156,72 @@ export default function EventDetails() {
     );
   };
 
-
-  
-  function handleListTicket(){
+  function handleListTicket() {
     router.push({
       pathname: "/listticket",
-      params: { eventId: event._id}
-    })
+      params: { eventId: event._id },
+    });
   }
-  
+
   useEffect(() => {
-    setLoading(true)
-    setError(false)
-    
+    setLoading(true);
+    setError(false);
+
     getEventById(eventId)
-    .then((event) => {
-      setEvent(event)
-    })
-    .catch((err) => {
-      console.error("Failed to load event:", err)
-      setError(true)
-    })
-    .finally(() => setLoading(false))
-  }, [eventId])
-  
-  if (loading) return <Text>Loading...</Text>
-  if (error) return <Text>Something went wrong.</Text>
-  if (!event) return <Text>No event found.</Text>
-  
+      .then((event) => {
+        setEvent(event);
+      })
+      .catch((err) => {
+        console.error("Failed to load event:", err);
+        setError(true);
+      })
+      .finally(() => setLoading(false));
+  }, [eventId]);
+
+  if (loading) return <Text>Loading...</Text>;
+  if (error) return <Text>Something went wrong.</Text>;
+  if (!event) return <Text>No event found.</Text>;
+
   const formattedDate = new Date(event.event_date).toLocaleDateString("en-GB", {
-  weekday: "long",
-  day: "numeric",
-  month: "long",
-  year: "numeric",
-  })
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
 
   const formattedTime = new Date(event.event_date).toLocaleTimeString("en-GB", {
     hour: "2-digit",
     minute: "2-digit",
-    hour12: true
-  })
-  
+    hour12: true,
+  });
 
   return (
-    <ScrollView >
+    <ScrollView>
       <View style={styles.container}>
-      <Image
-      source={{ uri: event.event_img }}
-      resizeMode="cover"
-      style={styles.image}
-      />
-      <View style={styles.textContainer}>
-        <Text style={styles.artist}>{event.event_artist}</Text>
-        <Text style={styles.venue}>Playing: {event.event_venue}, {event.event_location}</Text>
-        <Text style={styles.date} >{formattedDate}, {formattedTime}</Text>
-      </View>
+        <Image
+          source={{ uri: event.event_img }}
+          resizeMode="cover"
+          style={styles.image}
+        />
+        <View style={styles.textContainer}>
+          <Text style={styles.artist}>{event.event_artist}</Text>
+          <Text style={styles.venue}>
+            Playing: {event.event_venue}, {event.event_location}
+          </Text>
+          <Text style={styles.date}>
+            {formattedDate}, {formattedTime}
+          </Text>
+        </View>
         <View style={styles.buttonContainer}>
-      
-          <TouchableOpacity style={styles.button} onPress={handleViewTickets}> <Text style={styles.buttonText}>View Available Tickets</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={handleViewTickets}>
+            {" "}
+            <Text style={styles.buttonText}>View Available Tickets</Text>
+          </TouchableOpacity>
 
-          <TouchableOpacity style={styles.button} onPress={handleListTicket}> <Text style={styles.buttonText}>List Your Spare Ticket</Text></TouchableOpacity>
-
+          <TouchableOpacity style={styles.button} onPress={handleListTicket}>
+            {" "}
+            <Text style={styles.buttonText}>List Your Spare Ticket</Text>
+          </TouchableOpacity>
         </View>
       </View>
       <View>
@@ -238,7 +257,12 @@ const styles = StyleSheet.create({
     borderStyle: "solid",
     borderTopWidth: 1,
     borderLeftWidth: 1,
-    borderWidth: 3,
+    borderWidth: 2,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    elevation: 2,
   },
   listClaimed: {
     backgroundColor: "rgb(240, 234, 210)",
@@ -248,14 +272,19 @@ const styles = StyleSheet.create({
     height: "auto",
     alignItems: "center",
     alignSelf: "center",
-    borderColor: "rgb(169, 132, 103)",
-    borderStyle: "solid",
-    borderTopWidth: 1,
-    borderLeftWidth: 1,
-    borderWidth: 3,
+    // borderColor: "rgb(169, 132, 103)",
+    // borderStyle: "solid",
+    // borderTopWidth: 1,
+    // borderLeftWidth: 1,
+    // borderWidth: 3,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    elevation: 2,
   },
   containerClaimed: {
-    flex: 1, 
+    flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
     backgroundColor: "rgb(240, 234, 210)",
@@ -303,69 +332,70 @@ const styles = StyleSheet.create({
     backgroundColor: "#ADC178",
     marginBottom: 5,
     color: "black",
-    padding: 5,
+    padding: 10,
     margin: 5,
     marginHorizontal: 50,
     alignItems: "center",
     alignContent: "center",
-    borderRadius: "1rem",
-    borderColor: "black",
-    borderWidth: 1,
+    borderRadius: 20,
   },
   buttonClaimed: {
     backgroundColor: "rgb(221, 229, 182)",
     marginBottom: 5,
     color: "grey",
-    padding: 5,
+    padding: 10,
     margin: 5,
     marginHorizontal: 50,
     alignItems: "center",
-    borderRadius: "1rem",
+    borderRadius: 15,
   },
-image: {
-  width: "100%",
-  height: 250,
-  marginBottom: 16,
+  image: {
+    width: "100%",
+    height: 250,
+    marginBottom: 16,
+  },
+  container: {
+    flex: 1,
+    alignItems: "center",
+    padding: 15,
+  },
+  textContainer: {
+    flex: 1,
+    alignItems: "center",
+    padding: 15,
+  },
+  artist: {
+    fontWeight: "bold",
+    fontSize: 20,
+    marginBottom: 6,
+  },
+  venue: {
+    fontSize: 18,
+    marginBottom: 6,
+  },
+  date: {
+    fontSize: 18,
+    marginBottom: 6,
+  },
+  buttonContainer: {
+    justifyContent: "space-between",
+    padding: 8,
+  },
+  button: {
+    backgroundColor: "#DDE5B6",
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    marginTop: 10,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    elevation: 2,
+  },
 
-},
-container: {
-flex: 1,
-alignItems: 'center',
-padding: 15,
-},
-textContainer: {
-flex: 1,
-alignItems: 'center',
-padding: 15,
-},
-artist: {
-fontWeight: 'bold',
-fontSize: 20,
-marginBottom: 6
-},
-venue: {
-fontSize: 18,
-marginBottom: 6,
-},
-date : {
-fontSize: 18,
-marginBottom: 6,
-},
-buttonContainer: {
-justifyContent: 'space-between',
-padding: 8,
-},
-button: {
-  backgroundColor:"#DDE5B6",
-  paddingVertical: 12,
-  paddingHorizontal: 20,
-  marginTop: 10,
-  alignItems: "center",
-},
-
-buttonText: {
-  fontSize: 16,
-  fontWeight: "500",
-},
-})
-
+  buttonText: {
+    fontSize: 16,
+    fontWeight: "500",
+  },
+});

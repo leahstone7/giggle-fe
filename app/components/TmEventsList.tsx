@@ -1,7 +1,7 @@
 import formatEventDate from "@/utils/dateUtils";
 import Entypo from "@expo/vector-icons/Entypo";
-import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import React from "react";
 import {
   FlatList,
@@ -61,18 +61,29 @@ function TmEventsList({ tmEvents, setHasPostedEvent }) {
         <Text style={styles.artist}>{item.event_artist}</Text>
         <View style={styles.container}>
           <View>
-            <Text style={styles.item}><FontAwesome6 name="building-columns" size={15} color="black" />  {item.event_venue}</Text>
-            <Text style={styles.item}><Entypo name="location-pin" size={15} color="black" />  {item.event_location}</Text>
-            <Text style={styles.item}><MaterialIcons name="event" size={13} color="black" />   {formatEventDate(item.event_date)}</Text>
+            <Text style={styles.item}>
+              <FontAwesome6 name="building-columns" size={15} color="black" />{" "}
+              {item.event_venue}
+            </Text>
+            <Text style={styles.item}>
+              <Entypo name="location-pin" size={15} color="black" />{" "}
+              {item.event_location}
+            </Text>
+            <Text style={styles.item}>
+              <MaterialIcons name="event" size={13} color="black" />{" "}
+              {formatEventDate(item.event_date)}
+            </Text>
             <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            addNewEvent(item);
-          }}
-        >
-          
-          <Text><Entypo name="add-to-list" size={14} color="black" />  Add to Giggle</Text>
-        </TouchableOpacity>
+              style={styles.button}
+              onPress={() => {
+                addNewEvent(item);
+              }}
+            >
+              <Text>
+                <Entypo name="add-to-list" size={14} color="black" /> Add to
+                Giggle
+              </Text>
+            </TouchableOpacity>
           </View>
           <Image
             style={styles.eventImg}
@@ -81,7 +92,6 @@ function TmEventsList({ tmEvents, setHasPostedEvent }) {
             }}
           ></Image>
         </View>
-        
       </View>
     );
   };
@@ -99,16 +109,14 @@ const styles = StyleSheet.create({
     // borderColor: "grey",
     // borderStyle: "solid",
     // borderWidth: 1,
-    backgroundColor: 'rgb(240, 234, 210)',
+    backgroundColor: "rgb(240, 234, 210)",
     marginBlockEnd: 0,
-        marginBlockStart: 20,
-
+    marginBlockStart: 20,
   },
   container: {
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
-
   },
   artist: {
     backgroundColor: "rgb(193, 213, 193)",
@@ -116,11 +124,11 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBlockEnd: 5,
     fontWeight: "bold",
-     shadowColor: '#000',
-  shadowOffset: { width: 0, height: 2 },
-  shadowOpacity: 0.5,
-  shadowRadius: 2,
-  elevation: 2,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    elevation: 2,
   },
   item: {
     color: "black",
@@ -138,12 +146,11 @@ const styles = StyleSheet.create({
     width: 150,
     alignItems: "center",
     borderRadius: 5,
-     shadowColor: '#000',
-  shadowOffset: { width: 0, height: 2 },
-  shadowOpacity: 0.5,
-  shadowRadius: 2,
-  elevation: 2,
-    
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    elevation: 2,
   },
   eventImg: {
     width: 150,
@@ -151,6 +158,5 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
     alignItems: "flex-end",
     margin: 5,
-    
   },
 });
