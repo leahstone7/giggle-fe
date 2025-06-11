@@ -5,6 +5,7 @@ import React from "react";
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
+
 export default function TabLayout() {
   return (
     <Tabs
@@ -48,7 +49,7 @@ export default function TabLayout() {
         name="userprofile"
         options={{
           tabBarIcon: ({ size, color }) => (
-            <FontAwesome name="user" size={24} color="6C584C" />
+            <FontAwesome name="user" size={size} color="6C584C" />
           ),
         }}
       />
@@ -56,7 +57,7 @@ export default function TabLayout() {
         name="listticket"
         options={{
           tabBarIcon: ({ size, color }) => (
-           <Ionicons name="add-circle-outline" size={28} color="6C584C"/>
+           <Ionicons name="ticket" size={size} color="6C584C" />
           ),
         }}
       />
@@ -64,7 +65,7 @@ export default function TabLayout() {
         name="newEvent"
         options={{
           tabBarIcon: ({ size, color }) => (
-           <MaterialIcons name="event-available" size={26} color="6C584C" />
+           <MaterialIcons name="event-available" size={size} color="6C584C" />
           ),
         }}
       />
