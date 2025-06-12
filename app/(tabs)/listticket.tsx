@@ -2,11 +2,14 @@ import { getAllEvents, postTicket } from "@/utils/api";
 import formatEventDate from "@/utils/dateUtils";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 import { Picker } from "@react-native-picker/picker";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
+  RefreshControl,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -23,6 +26,16 @@ function ListTicket() {
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [postResponse, setPostResponse] = useState("");
   const [selectedValue, setSelectedValue] = useState(eventId);
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setHasSubmitted(false);
+    setIsLoading(false);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 300);
+  }, []);
 
   useEffect(() => {
     setIsLoading(true);
@@ -74,80 +87,96 @@ function ListTicket() {
   }
 
   return (
-    <View style={styles.container}>
-      {hasSubmitted ? (
-        <>
-          <Text>{`${postResponse}`}</Text>
-        </>
-      ) : (
-        <View>
-          <Text style={styles.title}>Your event </Text>
-          {isLoading ? (
-            <Text>Loading events...</Text>
-          ) : (
-            <Picker
-              selectedValue={selectedValue}
-              onValueChange={(value) => {
-                setSelectedValue(value);
-                handleChange("eventDetails", value);
-              }}
-            >
-              {eventData.map((event) => {
-                return (
-                  <Picker.Item
-                    key={event._id}
-                    label={
-                      formatEventDate(event.event_date) +
-                      ": " +
-                      event.event_artist +
-                      ", " +
-                      event.event_location
-                    }
-                    value={event._id}
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.container}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={styles.container}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        >
+          <View style={styles.container}>
+            {hasSubmitted ? (
+              <>
+                <Text>{`${postResponse}`}</Text>
+              </>
+            ) : (
+              <View>
+                <Text style={styles.title}>Your event </Text>
+                {isLoading ? (
+                  <Text>Loading events...</Text>
+                ) : (
+                  <Picker
+                    selectedValue={selectedValue}
+                    onValueChange={(value) => {
+                      setSelectedValue(value);
+                      handleChange("eventDetails", value);
+                    }}
+                  >
+                    {eventData.map((event) => {
+                      return (
+                        <Picker.Item
+                          key={event._id}
+                          label={
+                            formatEventDate(event.event_date) +
+                            ": " +
+                            event.event_artist +
+                            ", " +
+                            event.event_location
+                          }
+                          value={event._id}
+                        />
+                      );
+                    })}
+                  </Picker>
+                )}
+                <Text style={styles.title}>Select seating type</Text>
+                <Picker
+                  onValueChange={(value) => {
+                    handleChange("seating", value);
+                  }}
+                >
+                  <Picker.Item label="Seating" value="Seating" />
+                  <Picker.Item label="Standing" value="Standing" />
+                </Picker>
+                <Text style={styles.title}>Anything else to add?</Text>
+                <TextInput
+                  style={styles.input}
+                  value={ticketToAdd.notes}
+                  onChangeText={(text) => handleChange("notes", text)}
+                />
+                <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+                  <MaterialIcons
+                    name="switch-access-shortcut-add"
+                    size={24}
+                    color="black"
                   />
-                );
-              })}
-            </Picker>
-          )}
-          <Text style={styles.title}>Select seating type</Text>
-          <Picker
-            onValueChange={(value) => {
-              handleChange("seating", value);
-            }}
-          >
-            <Picker.Item label="Seating" value="Seating" />
-            <Picker.Item label="Standing" value="Standing" />
-          </Picker>
-          <Text style={styles.title}>Anything else to add?</Text>
-          <TextInput
-            style={styles.input}
-            value={ticketToAdd.notes}
-            onChangeText={(text) => handleChange("notes", text)}
-          />
-          <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-            <MaterialIcons
-              name="switch-access-shortcut-add"
-              size={24}
-              color="black"
-            />
-            <Text style={styles.buttonText}>Upload ticket</Text>
-          </TouchableOpacity>
+                  <Text style={styles.buttonText}>Upload ticket</Text>
+                </TouchableOpacity>
 
-          <View style={styles.bottomPage}>
-            <TouchableOpacity
-              style={styles.buttonAddEvent}
-              onPress={handlePressNewEventLink}
-            >
-              <MaterialCommunityIcons name="reminder" size={24} color="black" />
-              <Text style={styles.buttonText}>
-                {" "}
-                Can't find your event? Add it to Giggle!
-              </Text>
-            </TouchableOpacity>
+                <View style={styles.bottomPage}>
+                  <TouchableOpacity
+                    style={styles.buttonAddEvent}
+                    onPress={handlePressNewEventLink}
+                  >
+                    <MaterialCommunityIcons
+                      name="reminder"
+                      size={24}
+                      color="black"
+                    />
+                    <Text style={styles.buttonText}>
+                      {" "}
+                      Can't find your event? Add it to Giggle!
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            )}
           </View>
-        </View>
-      )}
-    </View>
+        </ScrollView>
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 
@@ -184,11 +213,11 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     width: "78%",
     borderRadius: 15,
-         shadowColor: '#000',
-  shadowOffset: { width: 0, height: 2 },
-  shadowOpacity: 0.5,
-  shadowRadius: 2,
-  elevation: 2,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    elevation: 2,
   },
   buttonText: {
     fontSize: 15,
@@ -203,11 +232,11 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     width: "78%",
     borderRadius: 15,
-         shadowColor: '#000',
-  shadowOffset: { width: 0, height: 2 },
-  shadowOpacity: 0.5,
-  shadowRadius: 2,
-  elevation: 2,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    elevation: 2,
   },
   bottomPage: {
     justifyContent: "flex-end",

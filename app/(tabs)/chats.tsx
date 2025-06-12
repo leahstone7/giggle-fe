@@ -1,4 +1,5 @@
 import { getMessagesByChatroomid, postMessageToChat } from "@/utils/api";
+import formatEventDate from "@/utils/dateUtils";
 import { useEffect, useState } from "react";
 import {
   StyleSheet,
@@ -55,13 +56,15 @@ export default function chats() {
       <View style={styles.chatContainer}>
         {messages.map((message) => {
           return message.senderId === id1 ? (
-            <Text key={message._id} style={styles.sender1}>
+            <View style={styles.sentBubble} key={message._id}>
+            <Text  style={styles.sender1}>
+              {/* {formatEventDate(message.timestamp)} */}
               {message.body}
-            </Text>
+            </Text></View>
           ) : (
-            <Text key={message._id} style={styles.sender2}>
+            <View key={message._id}><Text  style={styles.sender2}>
               {message.body}
-            </Text>
+            </Text></View>
           );
         })}
         <Text></Text>
@@ -70,6 +73,7 @@ export default function chats() {
         <View style={styles.chatBar}>
           <TextInput
             placeholder="message"
+            value={messageToSend}
             onChangeText={(e) => setMessageToSend(e)}
           />
         </View>
@@ -100,15 +104,19 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   sender1: {
-    color: "red",
-    paddingRight: 40,
+    color: "black",
+    backgroundColor: "white",
+    paddingRight: 50,
     textAlign: "left",
     padding: 5,
   },
+  sentBubble:{
+backgroundColor: 'green',
+  },
   sender2: {
-    color: "green",
+    color: "grey",
     textAlign: "right",
-    paddingLeft: 40,
+    paddingLeft: 50,
     padding: 5,
   },
   barAndButton: {
