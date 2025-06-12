@@ -2,7 +2,7 @@ import { IUser } from "@/context/userContext";
 import { getEventById, getUserByUserName } from "@/utils/api";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Loader from "../components/loader";
 import { styles } from "@/styles/otherUser.styles";
 
@@ -174,9 +174,17 @@ export default function UserDetails() {
             {user.interestedEvents.map((eventId, index) => (
 
           <View key={index} style={styles.event}>
+            <TouchableOpacity onPress={()=> {
+              router.push({
+                pathname: "/(events)/[eventId]",
+                params: {eventId: eventId}
+              })
+            }}>
+
                 <Text style={{ fontWeight: "bold" }}>
                 {/* <Text>{formatDate(event.date)}</Text> */}
                 {eventNames[eventId] || "Unknown Event"}</Text>
+            </TouchableOpacity>
               </View>
             ))}
           </View>
