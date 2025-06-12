@@ -11,11 +11,13 @@ export default function newEvent() {
   const [hasPostedEvent, setHasPostedEvent] = useState(false);
   const [searchQuery, setSearchQuery] = React.useState("");
   const [noResults, setNoResults] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     setHasPostedEvent(false);
     setSearchQuery("");
+    setIsLoading(false);
     setTimeout(() => {
       setRefreshing(false);
     }, 2000);
@@ -39,15 +41,22 @@ export default function newEvent() {
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
             setNoResults={setNoResults}
+            setIsLoading={setIsLoading}
           />
 
           {hasPostedEvent ? (
-            <Text>
+            <Text style={{ alignSelf: "center", fontWeight: "bold" }}>
               Thank you, you should now be able to see this event on the main
               search!
             </Text>
+          ) : isLoading ? (
+            <Text style={{ alignSelf: "center", fontWeight: "bold" }}>
+              Running search...
+            </Text>
           ) : noResults ? (
-            <Text>Sorry, no results matched the search</Text>
+            <Text style={{ alignSelf: "center", fontWeight: "bold" }}>
+              Sorry, no results matched the search
+            </Text>
           ) : (
             <TmEventsList
               tmEvents={tmEvents}

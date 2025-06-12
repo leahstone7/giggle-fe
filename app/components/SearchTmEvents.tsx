@@ -9,15 +9,19 @@ function SearchTMEvents({
   setSearchQuery,
   searchQuery,
   setNoResults,
+  setIsLoading,
 }) {
   const searchTM = () => {
+    setIsLoading(true);
     setHasPostedEvent(false); //Allows user to search again after posting than once so we don't need a reset button
     setNoResults(false);
     const eventArr = [];
     getTMEventsByKeyword(searchQuery).then((events) => {
       if (events === undefined) {
+        setIsLoading(false);
         setNoResults(true);
       } else {
+        setIsLoading(false);
         setNoResults(false);
         events.map((event) => {
           const eventObj = {};
