@@ -29,7 +29,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="message"
+        name="chats"
         options={{
           tabBarIcon: ({ size, color }) => (
             <AntDesign name="message1" size={size} color="6C584C" />
