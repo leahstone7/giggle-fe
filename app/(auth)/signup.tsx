@@ -1,7 +1,7 @@
 import { styles } from "@/styles/auth.styles";
 import { Ionicons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
-import React, { useState } from "react";
+import { useNavigation, useRouter } from "expo-router";
+import React, { useLayoutEffect, useState } from "react";
 import {
   ActivityIndicator,
   KeyboardAvoidingView,
@@ -19,6 +19,18 @@ export default function Signup() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+
+   const handleLogin = () => {};
+    
+  const navigation = useNavigation();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: "signup",
+      headerShown: false, 
+    });
+  }, [navigation]);
+  
   const router = useRouter();
   const handleSignUp = () => {};
 
