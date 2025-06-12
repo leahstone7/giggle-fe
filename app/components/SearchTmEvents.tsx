@@ -1,6 +1,13 @@
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
-import { Button, StyleSheet, TextInput, View } from "react-native";
+import {
+  Button,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { getTMEventById, getTMEventsByKeyword } from "../../utils/api";
 
 function SearchTMEvents({
@@ -49,7 +56,23 @@ function SearchTMEvents({
         <TextInput
           placeholder="Find a new event to add..."
           onChangeText={(e) => setSearchQuery(e)}
+          value={searchQuery}
+          autoCapitalize="none"
+          autoCorrect={false}
         />
+        {searchQuery && (
+          <TouchableOpacity
+            onPress={() => {
+              setSearchQuery("");
+              setTmEvents([]);
+              setNoResults(false);
+              setIsLoading(false);
+            }}
+            style={styles.clearBtn}
+          >
+            <Text style={styles.clearBtnText}>Clear</Text>
+          </TouchableOpacity>
+        )}
       </View>
       <View style={[{ width: "30%", margin: 5, alignSelf: "center" }]}>
         <Button title="Search" color="#f194ff" onPress={searchTM} />
@@ -72,5 +95,15 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     width: 300,
     alignSelf: "center",
+  },
+  clearBtn: {
+    position: "absolute",
+    justifyContent: "center",
+    right: 10,
+    top: 10,
+    zIndex: 1,
+  },
+  clearBtnText: {
+    color: "#979897",
   },
 });
