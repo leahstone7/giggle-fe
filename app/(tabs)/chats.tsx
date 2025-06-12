@@ -49,9 +49,10 @@ export default function chats() {
   //display in order
   //style left for sender, right for receiver etc
   return (
-    <View>
+    <View style={styles.parentContainer}>
+      <Text style={styles.title}>Chatting with mirielLikesTurtles</Text>
+
       <View style={styles.chatContainer}>
-        <Text>CHAT WITH HARDCODED NAME??</Text>
         {messages.map((message) => {
           return message.senderId === id1 ? (
             <Text key={message._id} style={styles.sender1}>
@@ -73,27 +74,42 @@ export default function chats() {
           />
         </View>
         <TouchableOpacity style={styles.sendButton} onPress={sendMessage}>
-          <Text>Send</Text>
+          <Text style={{ textAlign: "center" }}>Send</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
 }
 const styles = StyleSheet.create({
+  parentContainer: {
+    position: "relative",
+    flex: 1,
+  },
   chatContainer: {
-    // flex: 2,
-    padding: 5,
+    margin: 10,
+    padding: 15,
+    borderRadius: 10,
+    backgroundColor: "white",
   },
   sender1: {
     color: "red",
-    justifyContent: "flex-start",
+    paddingRight: 40,
+    textAlign: "left",
+    padding: 5,
   },
   sender2: {
     color: "green",
-    justifyContent: "flex-end",
+    textAlign: "right",
+    paddingLeft: 40,
+    padding: 5,
   },
   barAndButton: {
     margin: 5,
+    flexDirection: "row",
+    position: "absolute",
+    bottom: 60,
+    left: 0,
+    right: 0,
   },
   chatBar: {
     borderColor: "grey",
@@ -101,10 +117,24 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     paddingLeft: 10,
     paddingRight: 10,
-    width: "85%",
+    height: "auto",
+    margin: 2,
+    flex: 9,
   },
   sendButton: {
     backgroundColor: "#f194ff",
-    width: "10%",
+    width: 20,
+    height: "auto",
+    borderRadius: 30,
+    padding: 5,
+    margin: 2,
+    flex: 2,
+    alignContent: "center",
+    textAlign: "center",
+  },
+  title: {
+    padding: 5,
+    paddingBlockEnd: 10,
+    position: "relative",
   },
 });
