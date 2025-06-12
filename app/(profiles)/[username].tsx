@@ -128,7 +128,7 @@ export default function UserDetails() {
         </View>
         <View style={styles.detailRow}>
           <Text style={styles.label}>Trust Rating:</Text>
-          <Text style={styles.value}>{user.trustRating}/5</Text>
+          <Text style={styles.value}>{((user.trustRating*100).toFixed(0))}%</Text>
         </View>
       </View>
 
