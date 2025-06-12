@@ -207,7 +207,7 @@ export default function EventList() {
         {/* Search bar */}
         <Ionicons name="search" size={20} styles={styles.searchIcon} />
         <TextInput
-        style={styles.searchInput}
+          style={styles.searchInput}
           placeholder="Search for events..."
           autoCorrect={false}
           autoCapitalize="none"
@@ -216,17 +216,30 @@ export default function EventList() {
         />
         {searchQuery && (
           <TouchableOpacity
-          onPress={()=>{
-            setSearchQuery("");
-          }}
-          style={styles.clearBtn}
-          ><Text style={styles.clearBtnText}>Clear</Text>
+            onPress={() => {
+              setSearchQuery("");
+            }}
+            style={styles.clearBtn}
+          >
+            <Text style={styles.clearBtnText}>Clear</Text>
           </TouchableOpacity>
         )}
       </View>
       <View style={{ display: "flex", flexDirection: "row" }}>
         <SortBy onSortChange={setSortOption} />
         <FilterBtn onLocationChange={filterByLocation} />
+      </View>
+      <View>
+
+        <TouchableOpacity onPress={()=> router.push('/(auth)/index')}>
+          <Text>Login</Text>
+        </TouchableOpacity>
+       
+   
+        <TouchableOpacity onPress={()=> router.push('/(auth)/signup')}>
+          <Text>Signup</Text>
+        </TouchableOpacity>
+   
       </View>
       <FlatList
         data={getSortedEvents(filteredEvents)}
@@ -237,7 +250,6 @@ export default function EventList() {
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
         }
-        
         ListEmptyComponent={renderEmptyComponent}
       />
     </View>

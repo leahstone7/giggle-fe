@@ -16,10 +16,14 @@ export default {
     ios: {
       supportsTablet: true,
     },
+    
     android: {
       adaptiveIcon: {
         foregroundImage: "./app/assets/images/giggle-logo.png",
         backgroundColor: "#ffffff",
+      },
+       "config": {
+        "usesNonExemptEncryption": false
       },
       edgeToEdgeEnabled: true,
     },
@@ -39,6 +43,8 @@ export default {
           backgroundColor: "#ffffff",
         },
       ],
+      
+
     ],
     experiments: {
       typedRoutes: true,
