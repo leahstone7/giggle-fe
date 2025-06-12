@@ -30,9 +30,9 @@ export default function RootLayout() {
           >
           {/* <Stack.Screen name="index" options={{ title: "Home" }} />
           <Stack.Screen name="Wishlist" options={{ title: "Wishlist" }} />
-          <Stack.Screen name="Messages" options={{ title: "Messages" }} />
-          <Stack.Screen name="Profile" options={{ title: "Profile" }} />
-          <Stack.Screen name="Login" options={{ title: "Login" }} /> */}
+          <Stack.Screen name="Messages" options={{ title: "Messages" }} />*/}
+          {/* <Stack.Screen name="Profile" options={{ title: "Profile" }} />
+          <Stack.Screen name="Login" options={{ title: "Login" }} />  */}
           <Stack.Screen name="index" />
           <Stack.Screen name="(auth)" options={{title: "login page"}}/>
 
