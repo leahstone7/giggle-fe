@@ -74,7 +74,15 @@ export default function chats() {
           />
         </View>
         <TouchableOpacity style={styles.sendButton} onPress={sendMessage}>
-          <Text style={{ textAlign: "center" }}>Send</Text>
+          <Text
+            style={{
+              textAlignVertical: "center",
+              textAlign: "center",
+              paddingBlockStart: 4,
+            }}
+          >
+            Send
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
