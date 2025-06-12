@@ -19,8 +19,8 @@ import { io, Socket } from "socket.io-client";
 
 
 
-const API_BASE_URL = "http://localhost:9090"; //add personal IP to test instead of localhost
-const SOCKET_URL = "http://localhost:9091"; // add personal IP to test instead of localhost
+const API_BASE_URL = "http://localhost:9090"; //add personal IP to test instead of localhost 
+const SOCKET_URL = "http://localhost:9091"; // add personal IP to test instead of localhost- socket io
 type Message = {
   _id?: string;
   msgId?: number;
