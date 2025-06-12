@@ -109,9 +109,13 @@ const styles = StyleSheet.create({
     // borderColor: "grey",
     // borderStyle: "solid",
     // borderWidth: 1,
-    backgroundColor: "rgb(240, 234, 210)",
+    // backgroundColor: "rgb(240, 234, 210)",
+
     marginBlockEnd: 0,
-    marginBlockStart: 20,
+    marginBlockStart: 30,
+    borderBlockEndColor: "grey",
+    borderBottomWidth: 0.5,
+    paddingBlockEnd: 8,
   },
   container: {
     flex: 1,
@@ -120,7 +124,7 @@ const styles = StyleSheet.create({
   },
   artist: {
     backgroundColor: "rgb(193, 213, 193)",
-    color: "black",
+    color: "#283618",
     padding: 10,
     marginBlockEnd: 5,
     fontWeight: "bold",
@@ -131,7 +135,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   item: {
-    color: "black",
+    color: "#283618",
     padding: 3,
     paddingHorizontal: 14,
     alignItems: "flex-start",
@@ -139,7 +143,7 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: "#ADC178",
     marginBottom: 5,
-    color: "black",
+    color: "#283618",
     padding: 10,
     marginBlockStart: 30,
     marginHorizontal: 20,
@@ -158,5 +162,6 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
     alignItems: "flex-end",
     margin: 5,
+    borderRadius: 3,
   },
 });

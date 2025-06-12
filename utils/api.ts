@@ -18,7 +18,9 @@ export const getTMEventsByKeyword = (searchTerm) => {
       `discovery/v2/events.json?keyword=${searchTerm}&countryCode=GB&apikey=${apiKey}`
     )
     .then(({ data: { _embedded } }) => {
-      return _embedded.events;
+      if (_embedded === undefined) {
+        return undefined;
+      } else return _embedded.events;
     });
 };
 

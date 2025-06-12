@@ -65,9 +65,9 @@ export default function EventDetails() {
               <FontAwesome6 name="person" size={30} color="grey" />
             )
           ) : item.seating === "Seating" ? (
-            <MaterialIcons name="chair" size={30} color="black" />
+            <MaterialIcons name="chair" size={30} color="283618" />
           ) : (
-            <FontAwesome6 name="person" size={30} color="black" />
+            <FontAwesome6 name="person" size={30} color="283618" />
           )}
         </Text>
         <Text
@@ -103,7 +103,7 @@ export default function EventDetails() {
                 <MaterialCommunityIcons
                   name="ticket-account"
                   size={18}
-                  color="black"
+                  color="283618"
                 />
               )}
               {"  Ticket donated by: "}
@@ -120,14 +120,14 @@ export default function EventDetails() {
                 {item.hasBeenClaimed ? (
                   <FontAwesome name="quote-left" size={18} color="grey" />
                 ) : (
-                  <FontAwesome name="quote-left" size={18} color="black" />
+                  <FontAwesome name="quote-left" size={18} color="283618" />
                 )}{" "}
                 {item.notes}{" "}
-                {item.hasBeenClaimed ? (
+                {/* {item.hasBeenClaimed ? (
                   <FontAwesome name="quote-right" size={18} color="grey" />
                 ) : (
-                  <FontAwesome name="quote-right" size={18} color="black" />
-                )}
+                  <FontAwesome name="quote-right" size={18} color="283618" />
+                )} */}
               </Text>
             ) : null}
           </View>
@@ -246,65 +246,58 @@ export default function EventDetails() {
 
 const styles = StyleSheet.create({
   listUnclaimed: {
-    backgroundColor: "rgb(193, 213, 193)",
-    padding: 0,
-    marginBlockStart: 8,
+    // backgroundColor: "rgb(240, 234, 210)",
+    padding: 5,
+    marginBlockStart: 20,
     width: "80%",
     height: "auto",
     alignItems: "center",
     alignSelf: "center",
-    borderColor: "rgb(108, 88, 76)",
+    borderColor: "283618",
     borderStyle: "solid",
-    borderTopWidth: 1,
-    borderLeftWidth: 1,
-    borderWidth: 2,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.5,
-    shadowRadius: 2,
-    elevation: 2,
+    borderTopWidth: 0.5,
+    // shadowColor: "#000",
+    // shadowOffset: { width: 0, height: 2 },
+    // shadowOpacity: 0.5,
+    // shadowRadius: 2,
+    // elevation: 2,
   },
   listClaimed: {
-    backgroundColor: "rgb(240, 234, 210)",
+    // backgroundColor: "rgb(240, 234, 210)",
+    color: "#283618",
     padding: 0,
-    marginBlockStart: 8,
+    marginBlockStart: 20,
     width: "80%",
     height: "auto",
     alignItems: "center",
     alignSelf: "center",
-    // borderColor: "rgb(169, 132, 103)",
-    // borderStyle: "solid",
-    // borderTopWidth: 1,
-    // borderLeftWidth: 1,
-    // borderWidth: 3,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.5,
-    shadowRadius: 2,
-    elevation: 2,
+    borderColor: "grey",
+    borderStyle: "solid",
+    borderTopWidth: 0.5,
+    // shadowColor: "#000",
+    // shadowOffset: { width: 0, height: 2 },
+    // shadowOpacity: 0.5,
+    // shadowRadius: 2,
+    // elevation: 2,
   },
   containerClaimed: {
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
-    backgroundColor: "rgb(240, 234, 210)",
   },
   containerUnclaimed: {
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
-    backgroundColor: "rgb(193, 213, 193)",
   },
   seatingUnclaimed: {
-    backgroundColor: "rgb(193, 213, 193)",
-    color: "black",
+    color: "283618",
     padding: 2,
     marginBlockStart: 2,
     fontWeight: "bold",
     fontSize: 20,
   },
   seatingClaimed: {
-    backgroundColor: "rgb(240, 234, 210)",
     color: "grey",
     padding: 2,
     marginBlockStart: 2,
@@ -313,7 +306,7 @@ const styles = StyleSheet.create({
   },
   itemUnclaimed: {
     backgroundColor: "transparent",
-    color: "black",
+    color: "283618",
     padding: 5,
     paddingHorizontal: 14,
     alignItems: "flex-start",
@@ -331,13 +324,18 @@ const styles = StyleSheet.create({
   buttonUnclaimed: {
     backgroundColor: "#ADC178",
     marginBottom: 5,
-    color: "black",
+    color: "283618",
     padding: 10,
     margin: 5,
     marginHorizontal: 50,
     alignItems: "center",
     alignContent: "center",
     borderRadius: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    elevation: 2,
   },
   buttonClaimed: {
     backgroundColor: "rgb(221, 229, 182)",
