@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Loader from "../components/loader";
 import { styles } from "@/styles/otherUser.styles";
+import ChatRoom from "../components/chat/[roomId]";
 
 export default function UserDetails() {
   const { username } = useLocalSearchParams();
@@ -190,6 +191,16 @@ export default function UserDetails() {
           </View>
         </View>
       )}
+      <View style={styles.chatBtn}>
+        <TouchableOpacity  onPress={()=> {
+          router.push({
+            pathname: '/components/chat/[roomId]',
+            params: {username: username}
+          })
+        }}>
+          <Text>Chat</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
