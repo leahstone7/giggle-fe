@@ -92,4 +92,19 @@ export const styles = StyleSheet.create({
     color: "red",
     fontSize: 16,
   },
+
+  chatBtn:{
+     backgroundColor: "#e0e0e0",
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 12,
+    marginRight: 8,
+    marginBottom: 4,
+    fontSize: 12,
+    width: 50,
+    alignItems: 'center',
+    height: 30,
+    alignContent: 'center'
+    
+},
 });

@@ -78,7 +78,7 @@ export default function EventDetails() {
           ]}
         >
           {item.seating}
-          <Text>{" Ticket"}</Text>
+          <Text> Ticket</Text>
         </Text>
         <View
           style={[
@@ -94,19 +94,23 @@ export default function EventDetails() {
               ]}
             >
               {item.hasBeenClaimed ? (
-                <MaterialCommunityIcons
-                  name="ticket-account"
-                  size={18}
-                  color="grey"
-                />
+                <Text>
+                  <MaterialCommunityIcons
+                    name="ticket-account"
+                    size={18}
+                    color="grey"
+                  />
+                </Text>
               ) : (
-                <MaterialCommunityIcons
-                  name="ticket-account"
-                  size={18}
-                  color="283618"
-                />
+                <Text>
+                  <MaterialCommunityIcons
+                    name="ticket-account"
+                    size={18}
+                    color="283618"
+                  />
+                </Text>
               )}
-              {"  Ticket donated by: "}
+              <Text> Ticket donated by: </Text>
               {item.owner_username}
             </Text>
             {item.notes ? (
@@ -118,13 +122,17 @@ export default function EventDetails() {
                 ]}
               >
                 {item.hasBeenClaimed ? (
-                  <FontAwesome name="quote-left" size={18} color="grey" />
+                  <Text>
+                    <FontAwesome name="quote-left" size={18} color="grey" />
+                  </Text>
                 ) : (
+
                   <FontAwesome name="quote-left" size={18} color="283618" />
                 )}
                 <Text> </Text>
                 {item.notes}
                 <Text> </Text>
+
                 {/* {item.hasBeenClaimed ? (
                   <FontAwesome name="quote-right" size={18} color="grey" />
                 ) : (
@@ -218,7 +226,6 @@ export default function EventDetails() {
           <TouchableOpacity style={styles.button} onPress={handleViewTickets}>
             <Text style={styles.buttonText}>View Available Tickets</Text>
           </TouchableOpacity>
-
           <TouchableOpacity style={styles.button} onPress={handleListTicket}>
             <Text style={styles.buttonText}>List Your Spare Ticket</Text>
           </TouchableOpacity>
@@ -229,7 +236,6 @@ export default function EventDetails() {
           availableTickets.length > 0 ? (
             <View>
               <FlatList
-                // horizontal={true}
                 scrollEnabled={false}
                 data={availableTickets}
                 renderItem={renderItem}

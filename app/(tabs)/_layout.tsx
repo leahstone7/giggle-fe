@@ -1,10 +1,9 @@
 import { Ionicons } from "@expo/vector-icons";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Tabs } from "expo-router";
 import React from "react";
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-
 
 export default function TabLayout() {
   return (
@@ -29,7 +28,6 @@ export default function TabLayout() {
           ),
         }}
       />
-
       <Tabs.Screen
         name="message"
         options={{
@@ -46,19 +44,19 @@ export default function TabLayout() {
           ),
         }}
       />
-       <Tabs.Screen
+      <Tabs.Screen
         name="listticket"
         options={{
           tabBarIcon: ({ size, color }) => (
-           <Ionicons name="ticket" size={size} color="6C584C" />
+            <Ionicons name="ticket" size={size} color="6C584C" />
           ),
         }}
       />
-             <Tabs.Screen
+      <Tabs.Screen
         name="newEvent"
         options={{
           tabBarIcon: ({ size, color }) => (
-           <MaterialIcons name="event-available" size={size} color="6C584C" />
+            <MaterialIcons name="event-available" size={size} color="6C584C" />
           ),
         }}
       />

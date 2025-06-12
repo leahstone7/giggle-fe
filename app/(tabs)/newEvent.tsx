@@ -17,10 +17,11 @@ export default function newEvent() {
     setRefreshing(true);
     setHasPostedEvent(false);
     setSearchQuery("");
+    setTmEvents([]);
     setIsLoading(false);
     setTimeout(() => {
       setRefreshing(false);
-    }, 2000);
+    }, 300);
   }, []);
 
   return (
