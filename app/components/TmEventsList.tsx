@@ -109,9 +109,13 @@ const styles = StyleSheet.create({
     // borderColor: "grey",
     // borderStyle: "solid",
     // borderWidth: 1,
-    backgroundColor: "rgb(240, 234, 210)",
+    // backgroundColor: "rgb(240, 234, 210)",
+
     marginBlockEnd: 0,
-    marginBlockStart: 20,
+    marginBlockStart: 30,
+    borderBlockEndColor: "grey",
+    borderBottomWidth: 0.5,
+    paddingBlockEnd: 8,
   },
   container: {
     flex: 1,
@@ -158,5 +162,6 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
     alignItems: "flex-end",
     margin: 5,
+    borderRadius: 5,
   },
 });
