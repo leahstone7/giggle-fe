@@ -10,6 +10,7 @@ export default function newEvent() {
   const [tmEvents, setTmEvents] = useState([]);
   const [hasPostedEvent, setHasPostedEvent] = useState(false);
   const [searchQuery, setSearchQuery] = React.useState("");
+  const [noResults, setNoResults] = useState(false);
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -30,15 +31,14 @@ export default function newEvent() {
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
         >
-          <Text style={styles.title}>
-            Search for events to add to Giggle
-          </Text>
+          <Text style={styles.title}>Search for events to add to Giggle</Text>
 
           <SearchTMEvents
             setTmEvents={setTmEvents}
             setHasPostedEvent={setHasPostedEvent}
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
+            setNoResults={setNoResults}
           />
 
           {hasPostedEvent ? (
@@ -46,6 +46,8 @@ export default function newEvent() {
               Thank you, you should now be able to see this event on the main
               search!
             </Text>
+          ) : noResults ? (
+            <Text>Sorry, no results matched the search</Text>
           ) : (
             <TmEventsList
               tmEvents={tmEvents}
@@ -61,7 +63,7 @@ export default function newEvent() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-     backgroundColor: '#f5f5f5',
+    backgroundColor: "#f5f5f5",
     padding: 10,
     paddingBottom: 50,
   },
@@ -69,7 +71,7 @@ const styles = StyleSheet.create({
     color: "black",
     padding: 10,
     marginBlockStart: 10,
-    alignSelf: 'center',
+    alignSelf: "center",
     fontWeight: "bold",
   },
 });

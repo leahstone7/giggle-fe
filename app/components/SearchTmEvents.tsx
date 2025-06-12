@@ -8,23 +8,30 @@ function SearchTMEvents({
   setHasPostedEvent,
   setSearchQuery,
   searchQuery,
+  setNoResults,
 }) {
   const searchTM = () => {
     setHasPostedEvent(false); //Allows user to search again after posting than once so we don't need a reset button
+    setNoResults(false);
     const eventArr = [];
     getTMEventsByKeyword(searchQuery).then((events) => {
-      events.map((event) => {
-        const eventObj = {};
-        eventObj.event_artist = event.name;
-        getTMEventById(event.id).then((singleEvent) => {
-          eventObj.event_location = singleEvent._embedded.venues[0].city.name;
-          eventObj.event_date = singleEvent.dates.start.dateTime;
-          eventObj.event_venue = singleEvent._embedded.venues[0].name;
-          eventObj.event_img = singleEvent.images[0].url;
-          eventArr.push(eventObj);
-          return eventArr;
+      if (events === undefined) {
+        setNoResults(true);
+      } else {
+        setNoResults(false);
+        events.map((event) => {
+          const eventObj = {};
+          eventObj.event_artist = event.name;
+          getTMEventById(event.id).then((singleEvent) => {
+            eventObj.event_location = singleEvent._embedded.venues[0].city.name;
+            eventObj.event_date = singleEvent.dates.start.dateTime;
+            eventObj.event_venue = singleEvent._embedded.venues[0].name;
+            eventObj.event_img = singleEvent.images[0].url;
+            eventArr.push(eventObj);
+            return eventArr;
+          });
         });
-      });
+      }
       setTmEvents(eventArr);
     });
   };
