@@ -78,7 +78,7 @@ export default function EventDetails() {
           ]}
         >
           {item.seating}
-          {" Ticket"}
+          <Text>{" Ticket"}</Text>
         </Text>
         <View
           style={[
@@ -121,8 +121,10 @@ export default function EventDetails() {
                   <FontAwesome name="quote-left" size={18} color="grey" />
                 ) : (
                   <FontAwesome name="quote-left" size={18} color="283618" />
-                )}{" "}
-                {item.notes}{" "}
+                )}
+                <Text> </Text>
+                {item.notes}
+                <Text> </Text>
                 {/* {item.hasBeenClaimed ? (
                   <FontAwesome name="quote-right" size={18} color="grey" />
                 ) : (
@@ -214,12 +216,10 @@ export default function EventDetails() {
         </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={handleViewTickets}>
-            {" "}
             <Text style={styles.buttonText}>View Available Tickets</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.button} onPress={handleListTicket}>
-            {" "}
             <Text style={styles.buttonText}>List Your Spare Ticket</Text>
           </TouchableOpacity>
         </View>
