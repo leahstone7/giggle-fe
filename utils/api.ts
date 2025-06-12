@@ -119,3 +119,22 @@ export const getUserByUserName = (username) => {
       return Promise.reject(err);
     });
 };
+
+export const getMessagesByChatroomid = (roomId) => {
+  return giggleApi
+    .get(`messages/${roomId}`)
+    .then(({ data: { messages } }) => {
+      return messages;
+    })
+    .catch((err) => {
+      return Promise.reject(err);
+    });
+};
+
+export const postMessageToChat = (msg, roomId) => {
+  return giggleApi
+    .post(`messages/${roomId}`, msg)
+    .then(({ data: { message } }) => {
+      return message;
+    });
+};

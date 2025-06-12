@@ -126,12 +126,13 @@ export default function EventDetails() {
                     <FontAwesome name="quote-left" size={18} color="grey" />
                   </Text>
                 ) : (
-                  <Text>
-                    <FontAwesome name="quote-left" size={18} color="283618" />
-                  </Text>
-                )}{" "}
+
+                  <FontAwesome name="quote-left" size={18} color="283618" />
+                )}
                 <Text> </Text>
                 {item.notes}
+                <Text> </Text>
+
                 {/* {item.hasBeenClaimed ? (
                   <FontAwesome name="quote-right" size={18} color="grey" />
                 ) : (
