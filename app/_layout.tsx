@@ -16,6 +16,7 @@ export default function RootLayout() {
               backgroundColor: "#ADC178",
             },
             headerTitle: "",
+    
             headerLeft: ()=> (
               <Image source={require('../app/assets/images/giggle-text-transparent.png')} 
               style={{width: 120, height: 60, borderRadius: 0, resizeMode: 'contain'}}

@@ -1,8 +1,8 @@
 import { COLORS } from "@/constants/theme";
 import { styles } from "@/styles/auth.styles";
 import { Ionicons } from "@expo/vector-icons";
-import { Link } from "expo-router";
-import React, { useState } from "react";
+import { Link, useNavigation } from "expo-router";
+import React, { useLayoutEffect, useState } from "react";
 import {
   ActivityIndicator,
   Image,
@@ -21,12 +21,22 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleLogin = () => {};
+  
+    const navigation = useNavigation();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: "Login",
+      headerShown: false, 
+    });
+  }, [navigation]);
 
   return (
     // need to fix keyboardavoiding view for android.
     <KeyboardAvoidingView
       style={{ flex: 1 }}
-      behavior={Platform.OS === "android" ? "padding" : "height"}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      
     >
       <View >
         {/*BRAND SECTION */}
